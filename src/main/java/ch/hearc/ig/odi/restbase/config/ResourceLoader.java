@@ -1,6 +1,6 @@
 package ch.hearc.ig.odi.restbase.config;
 
-import ch.hearc.ig.odi.restbase.resources.RestResource;
+import ch.hearc.ig.odi.restbase.resources.MyResource;
 import java.util.HashSet;
 import java.util.Set;
 import javax.ws.rs.ApplicationPath;
@@ -15,7 +15,7 @@ public class ResourceLoader extends Application {
   @Override
   public Set<Class<?>> getClasses() {
     HashSet resources = new HashSet<Class<?>>();
-    resources.add(RestResource.class);
+    resources.add(MyResource.class);
     return resources;
   }
 
