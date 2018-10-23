@@ -1,9 +1,11 @@
 package ch.hearc.ig.odi.restbase.launch;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import javax.servlet.ServletException;
 import org.apache.catalina.WebResourceRoot;
 import org.apache.catalina.WebResourceSet;
 import org.apache.catalina.core.StandardContext;
@@ -38,7 +40,13 @@ public class Main {
     Tomcat tomcat = new Tomcat();
     Path tempPath = Files.createTempDirectory("tomcat-base-dir");
     tomcat.setBaseDir(tempPath.toString());
+    configurePort(tomcat);
+    configureResources(root, tomcat);
+    tomcat.start();
+    tomcat.getServer().await();
+  }
 
+  private static void configurePort(Tomcat tomcat) {
     //The port that we should run on can be set into an environment variable
     //Look for that variable and default to 8080 if it isn't there.
     String webPort = System.getenv("PORT");
@@ -47,6 +55,10 @@ public class Main {
     }
 
     tomcat.setPort(Integer.valueOf(webPort));
+  }
+
+  private static void configureResources(File root, Tomcat tomcat)
+      throws IOException, ServletException {
     File webContentFolder = new File(root.getAbsolutePath(), "src/main/webapp/");
     if (!webContentFolder.exists()) {
       webContentFolder = Files.createTempDirectory("default-doc-base").toFile();
@@ -75,9 +87,7 @@ public class Main {
     }
     resources.addPreResources(resourceSet);
     ctx.setResources(resources);
-
-    tomcat.start();
-    tomcat.getServer().await();
   }
+
 
 }
