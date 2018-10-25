@@ -1,0 +1,495 @@
+openapi: 3.0.0
+servers:
+  - url: 'https://virtserver.swaggerhub.com/HEG/marathon/1.0.0'
+  - url: 'http://virtserver.swaggerhub.com/HEG/marathon/1.0.0'
+info:
+  description: |
+    This is an api to manage marathon
+  version: "1.0.0-oas3"
+  title: Marathon API
+  termsOfService: 'http://swagger.io/terms/'
+  contact:
+    email: apiteam@he-arc.ch
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+tags:
+  - name: Marathon
+    description: Everything about marathon
+  - name: Category
+    description: Everything about category
+  - name: Person
+    description: Everything about person
+paths:
+  /marathon:
+    get:
+      tags:
+        - Marathon
+      summary: List all the marathons
+      operationId: getMarathons
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Marathon'
+    post:
+      tags:
+        - Marathon
+      summary: Add a new marathon
+      operationId: addMarathon
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                name:
+                  type: string
+                city:
+                  type: string
+              required:
+                - id
+                - name
+                - city
+      responses:
+        '200':
+          description: successful operation
+    put:
+      tags:
+        - Marathon
+      summary: Update an existing marathon
+      operationId: updateMarathon
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                name:
+                  type: string
+                city:
+                  type: string
+              required:
+                - id
+                - name
+                - city
+      responses:
+        '200':
+          description: successful operation
+  /marathon/{id}:
+    get:
+      tags:
+      - Marathon
+      summary: Get an existing marathon by id
+      operationId: getMarathonById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: id of the marathon that have to be getted
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/Marathon'
+    delete:
+      tags:
+      - Marathon
+      summary: Delete an existing marathon
+      operationId: deleteMarathonById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: id of the marathon that have to be deleted
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful operation
+  /marathon/{id}/category:
+    post:
+      tags:
+        - Category
+      summary: Add a new category to an existing marathon
+      operationId: addCategory
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: id of the marathon in which the category have to be added
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                idCategory:
+                  type: integer
+                nameCategory:
+                  type: string
+                dateOfRunCategory:
+                  type: string
+                maxPersonCategory:
+                  type: integer
+                RegistrationFees:
+                  type: string
+                maxAge:
+                  type: integer
+                minAge:
+                  type: integer
+              required:
+                - idCategory
+                - nameCategory
+                - dateOfRunCategory
+                - maxPersonCategory
+                - RegistrationFees
+                - maxAge
+                - minAge
+      responses:
+        '200':
+          description: successful operation
+    put:
+      tags:
+        - Category
+      summary: Modify the name of an existing category
+      operationId: modifyCategory
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: id of the marathon in which the category have to be modified
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                idCategory:
+                  type: integer
+                nameCategory:
+                  type: string
+                
+              required:
+                - idCategory
+                - nameCategory
+      responses:
+        '200':
+          description: successful operation
+  /marathon/{id}/category/{idCategory}:
+    delete:
+      tags:
+        - Category
+      summary: Delete an existing category
+      operationId: deleteCategoryById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: id of the marathon in which the category have to be deleted
+          schema:
+            type: integer
+        - name: idCategory
+          in: path
+          required: true
+          description: id of the category that have to be deleted
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful operation
+  /person:
+    get:
+      tags:
+        - Person
+      summary: List all people
+      operationId: getPeople
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Person'
+    post:
+      tags:
+        - Person
+      summary: Add a new person
+      operationId: addPerson
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                firstName:
+                  type: string
+                lastName:
+                  type: string
+                birthDate:
+                  type: string
+              required:
+                - id
+                - firstName
+                - lastName
+                - birthDate
+      responses:
+        '200':
+          description: successful operation
+    put:
+      tags:
+        - Person
+      summary: Modify the firstname and the lastname of an existing person
+      operationId: modifyFirstAndLastNamePerson
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                firstName:
+                  type: string
+                lastName:
+                  type: string
+              required:
+                - id
+                - firstName
+                - lastName
+      responses:
+        '200':
+          description: successful operation
+      
+  /person/{id}:
+    get:
+      tags:
+      - Person
+      summary: Get an existing person by id
+      operationId: getPersonById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: id of the person that have to be getted
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Person'
+    delete:
+      tags:
+      - Person
+      summary: Delete an existing person by id
+      operationId: deletePersonById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: id of the person that have to be deleted
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful operation
+  /marathon/{id}/category/{idCategory}/person/{idPerson}:
+    put:
+      tags:
+        - Person
+      summary: Register a person to a marathon
+      operationId: registerPersonToMarathon
+      parameters:
+        - name: id
+          in: path
+          description: id of the marathon
+          required: true
+          schema:
+            type: integer
+        - name: idCategory
+          in: path
+          description: id of the category
+          required: true
+          schema:
+            type: integer
+        - name: idPerson
+          in: path
+          description: id of the person
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful operation
+    delete:
+      tags:
+        - Person
+      summary: delete a person from a marathon
+      operationId: deletePersonFromMarathon
+      parameters:
+        - name: id
+          in: path
+          description: id of the marathon
+          required: true
+          schema:
+            type: integer
+        - name: idCategory
+          in: path
+          description: id of the category
+          required: true
+          schema:
+            type: integer
+        - name: idPerson
+          in: path
+          description: id of the person
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful operation
+  /person/{id}/runs:
+    get:
+      tags:
+        - Person
+      summary: get all runs of a person
+      operationId: getAllRunsOfAPerson
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Category'
+externalDocs:
+  description: Find out more about Swagger
+  url: 'http://swagger.io'
+components:
+  schemas:
+    Marathon:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1004
+        name:
+          type: string
+          example: "Marathon Zürich"
+        city:
+          type: string
+          example: "Zürich"
+        listCategories:
+          type: array
+          items:
+            $ref: "#/components/schemas/Category"
+      xml:
+        name: Marathon
+    Category:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 2020
+        name:
+          type: string
+          example: Semi-Marathon
+        dateOfRun:
+          type: string
+          format: date
+          example: "20.10.2018"
+        maxPerson:
+          type: integer
+          format: int32
+          example: -1
+        registrationFees:
+          type: number
+          format: double
+          example: 45.0
+        ageRange:
+          type: array
+          items:
+              type: integer
+              format: int32
+        marathon:
+          $ref: "#/components/schemas/Marathon"
+        participantList:
+          type: array
+          items:
+            $ref: "#/components/schemas/Person"
+      xml:
+        name: Category
+    Person:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 3010
+        firstName:
+          type: string
+          example: Sabrina
+        lastName:
+          type: string
+          example: Hillow
+        birthdate:
+          type: string
+          format: date
+          example: "15.03.1997"
+        listCategory:
+          type: array
+          items:
+            $ref: "#/components/schemas/Category"
+      xml:
+        name: Person
+  securitySchemes:
+    petstore_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: 'http://petstore.swagger.io/oauth/dialog'
+          scopes:
+            'write:pets': modify pets in your account
+            'read:pets': read your pets
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header
