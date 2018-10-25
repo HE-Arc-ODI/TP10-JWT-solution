@@ -1,16 +1,1232 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
 <head>
-  <meta charset="UTF-8">
   <title>Marathon API</title>
+  <style type="text/css">
+    body {
+      font-family: Trebuchet MS, sans-serif;
+      font-size: 15px;
+      color: #444;
+      margin-right: 24px;
+    }
+
+    h1 {
+      font-size: 25px;
+    }
+
+    h2 {
+      font-size: 20px;
+    }
+
+    h3 {
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    hr {
+      height: 1px;
+      border: 0;
+      color: #ddd;
+      background-color: #ddd;
+    }
+
+    .app-desc {
+      clear: both;
+      margin-left: 20px;
+    }
+
+    .param-name {
+      width: 100%;
+    }
+
+    .license-info {
+      margin-left: 20px;
+    }
+
+    .license-url {
+      margin-left: 20px;
+    }
+
+    .model {
+      margin: 0 0 0px 20px;
+    }
+
+    .method {
+      margin-left: 20px;
+    }
+
+    .method-notes {
+      margin: 10px 0 20px 0;
+      font-size: 90%;
+      color: #555;
+    }
+
+    pre {
+      padding: 10px;
+      margin-bottom: 2px;
+    }
+
+    .http-method {
+      text-transform: uppercase;
+    }
+
+    pre.get {
+      background-color: #0f6ab4;
+    }
+
+    pre.post {
+      background-color: #10a54a;
+    }
+
+    pre.put {
+      background-color: #c5862b;
+    }
+
+    pre.delete {
+      background-color: #a41e22;
+    }
+
+    .huge {
+      color: #fff;
+    }
+
+    pre.example {
+      background-color: #f3f3f3;
+      padding: 10px;
+      border: 1px solid #ddd;
+    }
+
+    code {
+      white-space: pre;
+    }
+
+    .nickname {
+      font-weight: bold;
+    }
+
+    .method-path {
+      font-size: 1.5em;
+      background-color: #0f6ab4;
+    }
+
+    .up {
+      float: right;
+    }
+
+    .parameter {
+      width: 500px;
+    }
+
+    .param {
+      width: 500px;
+      padding: 10px 0 0 20px;
+      font-weight: bold;
+    }
+
+    .param-desc {
+      width: 700px;
+      padding: 0 0 0 20px;
+      color: #777;
+    }
+
+    .param-type {
+      font-style: italic;
+    }
+
+    .param-enum-header {
+      width: 700px;
+      padding: 0 0 0 60px;
+      color: #777;
+      font-weight: bold;
+    }
+
+    .param-enum {
+      width: 700px;
+      padding: 0 0 0 80px;
+      color: #777;
+      font-style: italic;
+    }
+
+    .field-label {
+      padding: 0;
+      margin: 0;
+      clear: both;
+    }
+
+    .field-items {
+      padding: 0 0 15px 0;
+      margin-bottom: 15px;
+    }
+
+    .return-type {
+      clear: both;
+      padding-bottom: 10px;
+    }
+
+    .param-header {
+      font-weight: bold;
+    }
+
+    .method-tags {
+      text-align: right;
+    }
+
+    .method-tag {
+      background: none repeat scroll 0% 0% #24A600;
+      border-radius: 3px;
+      padding: 2px 10px;
+      margin: 2px;
+      color: #FFF;
+      display: inline-block;
+      text-decoration: none;
+    }
+
+  </style>
 </head>
 <body>
 <h1>Marathon API</h1>
-<h2>endpoints</h2>
+<div class="app-desc">API specification and implementation assignment.</div>
+<div class="app-desc">More information: <a href=""></a></div>
+<div class="app-desc">Contact Info: <a href=""></a></div>
+<div class="app-desc">Version: 1.0.0-oas3</div>
+<div class="app-desc">BasePath:/rest</div>
+<div class="license-info"></div>
+<div class="license-url"></div>
+<h2>Access</h2>
+
+<h2><a name="__Methods">Methods</a></h2>
+[ Jump to <a href="#__Models">Models</a> ]
+
+<h3>Table of Contents </h3>
+<div class="method-summary"></div>
+<h4><a href="#Category">Category</a></h4>
 <ul>
-  <li>rest/marathon</li>
-  <li>rest/person</li>
+  <li><a href="#addCategory"><code><span class="http-method">post</span>
+    /marathon/{id}/category</code></a></li>
+  <li><a href="#deleteCategoryById"><code><span class="http-method">delete</span>
+    /marathon/{id}/category/{idCategory}</code></a></li>
+  <li><a href="#modifyCategory"><code><span class="http-method">put</span>
+    /marathon/{id}/category</code></a></li>
+</ul>
+<h4><a href="#Marathon">Marathon</a></h4>
+<ul>
+  <li><a href="#addMarathon"><code><span class="http-method">post</span> /marathon</code></a></li>
+  <li><a href="#deleteMarathonById"><code><span class="http-method">delete</span>
+    /marathon/{id}</code></a></li>
+  <li><a href="#getMarathonById"><code><span class="http-method">get</span>
+    /marathon/{id}</code></a></li>
+  <li><a href="#getMarathons"><code><span class="http-method">get</span> /marathon</code></a></li>
+  <li><a href="#updateMarathon"><code><span class="http-method">put</span> /marathon</code></a></li>
+</ul>
+<h4><a href="#Person">Person</a></h4>
+<ul>
+  <li><a href="#addPerson"><code><span class="http-method">post</span> /person</code></a></li>
+  <li><a href="#deletePersonById"><code><span class="http-method">delete</span> /person/{id}</code></a>
+  </li>
+  <li><a href="#deletePersonFromMarathon"><code><span class="http-method">delete</span>
+    /marathon/{id}/category/{idCategory}/person/{idPerson}</code></a></li>
+  <li><a href="#getAllRunsOfAPerson"><code><span class="http-method">get</span>
+    /person/{id}/runs</code></a></li>
+  <li><a href="#getPeople"><code><span class="http-method">get</span> /person</code></a></li>
+  <li><a href="#getPersonById"><code><span class="http-method">get</span> /person/{id}</code></a>
+  </li>
+  <li><a href="#modifyFirstAndLastNamePerson"><code><span class="http-method">put</span>
+    /person</code></a></li>
+  <li><a href="#registerPersonToMarathon"><code><span class="http-method">put</span>
+    /marathon/{id}/category/{idCategory}/person/{idPerson}</code></a></li>
 </ul>
 
+<h1><a name="Category">Category</a></h1>
+<div class="method"><a name="addCategory"/>
+  <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /marathon/{id}/category</code></pre>
+  </div>
+  <div class="method-summary">Add a new category to an existing marathon (<span class="nickname">addCategory</span>)
+  </div>
+  <div class="method-notes"></div>
+
+  <h3 class="field-label">Path parameters</h3>
+  <div class="field-items">
+    <div class="param">id (required)</div>
+
+    <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of the
+      marathon in which the category have to be added format: int32
+    </div>
+  </div>  <!-- field-items -->
+
+  <h3 class="field-label">Consumes</h3>
+  This API call consumes the following media types via the <span class="header">Content-Type</span>
+  request header:
+  <ul>
+    <li><code>application/x-www-form-urlencoded</code></li>
+  </ul>
+
+
+  <h3 class="field-label">Form parameters</h3>
+  <div class="field-items">
+    <div class="param">idCategory (required)</div>
+
+    <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash; default: null
+      format: int32
+    </div>
+    <div class="param">nameCategory (required)</div>
+
+    <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash; default: null
+    </div>
+    <div class="param">dateOfRunCategory (required)</div>
+
+    <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash; default: null
+    </div>
+    <div class="param">maxPersonCategory (required)</div>
+
+    <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash; default: null
+      format: int32
+    </div>
+    <div class="param">RegistrationFees (required)</div>
+
+    <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash; default: null
+    </div>
+    <div class="param">maxAge (required)</div>
+
+    <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash; default: null
+      format: int32
+    </div>
+    <div class="param">minAge (required)</div>
+
+    <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash; default: null
+      format: int32
+    </div>
+  </div>  <!-- field-items -->
+
+
+  <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+  <h3 class="field-label">Responses</h3>
+  <h4 class="field-label">200</h4>
+  successful operation
+  <a href="#"></a>
+</div> <!-- method -->
+<hr/>
+<div class="method"><a name="deleteCategoryById"/>
+  <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /marathon/{id}/category/{idCategory}</code></pre>
+  </div>
+  <div class="method-summary">Delete an existing category (<span
+      class="nickname">deleteCategoryById</span>)
+  </div>
+  <div class="method-notes"></div>
+
+  <h3 class="field-label">Path parameters</h3>
+  <div class="field-items">
+    <div class="param">id (required)</div>
+
+    <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of the
+      marathon in which the category have to be deleted format: int32
+    </div>
+    <div class="param">idCategory (required)</div>
+
+    <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of the
+      category that have to be deleted format: int32
+    </div>
+  </div>  <!-- field-items -->
+
+
+  <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+  <h3 class="field-label">Responses</h3>
+  <h4 class="field-label">200</h4>
+  successful operation
+  <a href="#"></a>
+</div> <!-- method -->
+<hr/>
+<div class="method"><a name="modifyCategory"/>
+  <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /marathon/{id}/category</code></pre>
+  </div>
+  <div class="method-summary">Modify the name of an existing category (<span class="nickname">modifyCategory</span>)
+  </div>
+  <div class="method-notes"></div>
+
+  <h3 class="field-label">Path parameters</h3>
+  <div class="field-items">
+    <div class="param">id (required)</div>
+
+    <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of the
+      marathon in which the category have to be modified format: int32
+    </div>
+  </div>  <!-- field-items -->
+
+  <h3 class="field-label">Consumes</h3>
+  This API call consumes the following media types via the <span class="header">Content-Type</span>
+  request header:
+  <ul>
+    <li><code>application/x-www-form-urlencoded</code></li>
+  </ul>
+
+
+  <h3 class="field-label">Form parameters</h3>
+  <div class="field-items">
+    <div class="param">idCategory (required)</div>
+
+    <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash; default: null
+      format: int32
+    </div>
+    <div class="param">nameCategory (required)</div>
+
+    <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash; default: null
+    </div>
+  </div>  <!-- field-items -->
+
+
+  <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+  <h3 class="field-label">Responses</h3>
+  <h4 class="field-label">200</h4>
+  successful operation
+  <a href="#"></a>
+</div> <!-- method -->
+<hr/>
+<h1><a name="Marathon">Marathon</a></h1>
+<div class="method"><a name="addMarathon"/>
+  <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span
+        class="http-method">post</span> /marathon</code></pre>
+  </div>
+  <div class="method-summary">Add a new marathon (<span class="nickname">addMarathon</span>)</div>
+  <div class="method-notes"></div>
+
+
+  <h3 class="field-label">Consumes</h3>
+  This API call consumes the following media types via the <span class="header">Content-Type</span>
+  request header:
+  <ul>
+    <li><code>application/x-www-form-urlencoded</code></li>
+  </ul>
+
+
+  <h3 class="field-label">Form parameters</h3>
+  <div class="field-items">
+    <div class="param">id (required)</div>
+
+    <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash; default: null
+      format: int32
+    </div>
+    <div class="param">name (required)</div>
+
+    <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash; default: null
+    </div>
+    <div class="param">city (required)</div>
+
+    <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash; default: null
+    </div>
+  </div>  <!-- field-items -->
+
+
+  <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+  <h3 class="field-label">Responses</h3>
+  <h4 class="field-label">200</h4>
+  successful operation
+  <a href="#"></a>
+</div> <!-- method -->
+<hr/>
+<div class="method"><a name="deleteMarathonById"/>
+  <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span
+        class="http-method">delete</span> /marathon/{id}</code></pre>
+  </div>
+  <div class="method-summary">Delete an existing marathon (<span
+      class="nickname">deleteMarathonById</span>)
+  </div>
+  <div class="method-notes"></div>
+
+  <h3 class="field-label">Path parameters</h3>
+  <div class="field-items">
+    <div class="param">id (required)</div>
+
+    <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of the
+      marathon that have to be deleted format: int32
+    </div>
+  </div>  <!-- field-items -->
+
+
+  <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+  <h3 class="field-label">Responses</h3>
+  <h4 class="field-label">200</h4>
+  successful operation
+  <a href="#"></a>
+</div> <!-- method -->
+<hr/>
+<div class="method"><a name="getMarathonById"/>
+  <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span
+        class="http-method">get</span> /marathon/{id}</code></pre>
+  </div>
+  <div class="method-summary">Get an existing marathon by id (<span
+      class="nickname">getMarathonById</span>)
+  </div>
+  <div class="method-notes"></div>
+
+  <h3 class="field-label">Path parameters</h3>
+  <div class="field-items">
+    <div class="param">id (required)</div>
+
+    <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of the
+      marathon that have to be getted format: int32
+    </div>
+  </div>  <!-- field-items -->
+
+
+  <h3 class="field-label">Return type</h3>
+  <div class="return-type">
+    <a href="#Marathon">Marathon</a>
+
+  </div>
+
+  <!--Todo: process Response Object and its headers, schema, examples -->
+
+  <h3 class="field-label">Example data</h3>
+  <div class="example-data-content-type">Content-Type: application/json</div>
+  <pre class="example"><code>{
+  "city" : "Zürich",
+  "name" : "Marathon Zürich",
+  "id" : 1004,
+  "listCategories" : [ {
+    "maxPerson" : -1,
+    "ageRange" : [ 0, 0 ],
+    "participantList" : [ {
+      "listCategory" : [ null, null ],
+      "firstName" : "Sabrina",
+      "lastName" : "Hillow",
+      "birthdate" : "2000-01-23",
+      "id" : 3010
+    }, {
+      "listCategory" : [ null, null ],
+      "firstName" : "Sabrina",
+      "lastName" : "Hillow",
+      "birthdate" : "2000-01-23",
+      "id" : 3010
+    } ],
+    "dateOfRun" : "2000-01-23",
+    "registrationFees" : 45.0,
+    "name" : "Semi-Marathon",
+    "id" : 2020
+  }, {
+    "maxPerson" : -1,
+    "ageRange" : [ 0, 0 ],
+    "participantList" : [ {
+      "listCategory" : [ null, null ],
+      "firstName" : "Sabrina",
+      "lastName" : "Hillow",
+      "birthdate" : "2000-01-23",
+      "id" : 3010
+    }, {
+      "listCategory" : [ null, null ],
+      "firstName" : "Sabrina",
+      "lastName" : "Hillow",
+      "birthdate" : "2000-01-23",
+      "id" : 3010
+    } ],
+    "dateOfRun" : "2000-01-23",
+    "registrationFees" : 45.0,
+    "name" : "Semi-Marathon",
+    "id" : 2020
+  } ]
+}</code></pre>
+
+  <h3 class="field-label">Produces</h3>
+  This API call produces the following media types according to the <span
+      class="header">Accept</span> request header;
+  the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+  <ul>
+    <li><code>application/json</code></li>
+  </ul>
+
+  <h3 class="field-label">Responses</h3>
+  <h4 class="field-label">200</h4>
+  successful operation
+  <a href="#Marathon">Marathon</a>
+</div> <!-- method -->
+<hr/>
+<div class="method"><a name="getMarathons"/>
+  <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /marathon</code></pre>
+  </div>
+  <div class="method-summary">List all the marathons (<span class="nickname">getMarathons</span>)
+  </div>
+  <div class="method-notes"></div>
+
+
+  <h3 class="field-label">Return type</h3>
+  <div class="return-type">
+    array[<a href="#Marathon">Marathon</a>]
+
+  </div>
+
+  <!--Todo: process Response Object and its headers, schema, examples -->
+
+  <h3 class="field-label">Example data</h3>
+  <div class="example-data-content-type">Content-Type: application/json</div>
+  <pre class="example"><code>{
+  "city" : "Zürich",
+  "name" : "Marathon Zürich",
+  "id" : 1004,
+  "listCategories" : [ {
+    "maxPerson" : -1,
+    "ageRange" : [ 0, 0 ],
+    "participantList" : [ {
+      "listCategory" : [ null, null ],
+      "firstName" : "Sabrina",
+      "lastName" : "Hillow",
+      "birthdate" : "2000-01-23",
+      "id" : 3010
+    }, {
+      "listCategory" : [ null, null ],
+      "firstName" : "Sabrina",
+      "lastName" : "Hillow",
+      "birthdate" : "2000-01-23",
+      "id" : 3010
+    } ],
+    "dateOfRun" : "2000-01-23",
+    "registrationFees" : 45.0,
+    "name" : "Semi-Marathon",
+    "id" : 2020
+  }, {
+    "maxPerson" : -1,
+    "ageRange" : [ 0, 0 ],
+    "participantList" : [ {
+      "listCategory" : [ null, null ],
+      "firstName" : "Sabrina",
+      "lastName" : "Hillow",
+      "birthdate" : "2000-01-23",
+      "id" : 3010
+    }, {
+      "listCategory" : [ null, null ],
+      "firstName" : "Sabrina",
+      "lastName" : "Hillow",
+      "birthdate" : "2000-01-23",
+      "id" : 3010
+    } ],
+    "dateOfRun" : "2000-01-23",
+    "registrationFees" : 45.0,
+    "name" : "Semi-Marathon",
+    "id" : 2020
+  } ]
+}</code></pre>
+
+  <h3 class="field-label">Produces</h3>
+  This API call produces the following media types according to the <span
+      class="header">Accept</span> request header;
+  the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+  <ul>
+    <li><code>application/json</code></li>
+  </ul>
+
+  <h3 class="field-label">Responses</h3>
+  <h4 class="field-label">200</h4>
+  successful operation
+
+</div> <!-- method -->
+<hr/>
+<div class="method"><a name="updateMarathon"/>
+  <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /marathon</code></pre>
+  </div>
+  <div class="method-summary">Update an existing marathon (<span
+      class="nickname">updateMarathon</span>)
+  </div>
+  <div class="method-notes"></div>
+
+
+  <h3 class="field-label">Consumes</h3>
+  This API call consumes the following media types via the <span class="header">Content-Type</span>
+  request header:
+  <ul>
+    <li><code>application/x-www-form-urlencoded</code></li>
+  </ul>
+
+
+  <h3 class="field-label">Form parameters</h3>
+  <div class="field-items">
+    <div class="param">id (required)</div>
+
+    <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash; default: null
+      format: int32
+    </div>
+    <div class="param">name (required)</div>
+
+    <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash; default: null
+    </div>
+    <div class="param">city (required)</div>
+
+    <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash; default: null
+    </div>
+  </div>  <!-- field-items -->
+
+
+  <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+  <h3 class="field-label">Responses</h3>
+  <h4 class="field-label">200</h4>
+  successful operation
+  <a href="#"></a>
+</div> <!-- method -->
+<hr/>
+<h1><a name="Person">Person</a></h1>
+<div class="method"><a name="addPerson"/>
+  <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /person</code></pre>
+  </div>
+  <div class="method-summary">Add a new person (<span class="nickname">addPerson</span>)</div>
+  <div class="method-notes"></div>
+
+
+  <h3 class="field-label">Consumes</h3>
+  This API call consumes the following media types via the <span class="header">Content-Type</span>
+  request header:
+  <ul>
+    <li><code>application/x-www-form-urlencoded</code></li>
+  </ul>
+
+
+  <h3 class="field-label">Form parameters</h3>
+  <div class="field-items">
+    <div class="param">id (required)</div>
+
+    <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash; default: null
+      format: int32
+    </div>
+    <div class="param">firstName (required)</div>
+
+    <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash; default: null
+    </div>
+    <div class="param">lastName (required)</div>
+
+    <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash; default: null
+    </div>
+    <div class="param">birthDate (required)</div>
+
+    <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash; default: null
+    </div>
+  </div>  <!-- field-items -->
+
+
+  <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+  <h3 class="field-label">Responses</h3>
+  <h4 class="field-label">200</h4>
+  successful operation
+  <a href="#"></a>
+</div> <!-- method -->
+<hr/>
+<div class="method"><a name="deletePersonById"/>
+  <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span
+        class="http-method">delete</span> /person/{id}</code></pre>
+  </div>
+  <div class="method-summary">Delete an existing person by id (<span class="nickname">deletePersonById</span>)
+  </div>
+  <div class="method-notes"></div>
+
+  <h3 class="field-label">Path parameters</h3>
+  <div class="field-items">
+    <div class="param">id (required)</div>
+
+    <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of the person
+      that have to be deleted format: int32
+    </div>
+  </div>  <!-- field-items -->
+
+
+  <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+  <h3 class="field-label">Responses</h3>
+  <h4 class="field-label">200</h4>
+  successful operation
+  <a href="#"></a>
+</div> <!-- method -->
+<hr/>
+<div class="method"><a name="deletePersonFromMarathon"/>
+  <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /marathon/{id}/category/{idCategory}/person/{idPerson}</code></pre>
+  </div>
+  <div class="method-summary">delete a person from a marathon (<span class="nickname">deletePersonFromMarathon</span>)
+  </div>
+  <div class="method-notes"></div>
+
+  <h3 class="field-label">Path parameters</h3>
+  <div class="field-items">
+    <div class="param">id (required)</div>
+
+    <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of the
+      marathon format: int32
+    </div>
+    <div class="param">idCategory (required)</div>
+
+    <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of the
+      category format: int32
+    </div>
+    <div class="param">idPerson (required)</div>
+
+    <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of the person
+      format: int32
+    </div>
+  </div>  <!-- field-items -->
+
+
+  <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+  <h3 class="field-label">Responses</h3>
+  <h4 class="field-label">200</h4>
+  successful operation
+  <a href="#"></a>
+</div> <!-- method -->
+<hr/>
+<div class="method"><a name="getAllRunsOfAPerson"/>
+  <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span
+        class="http-method">get</span> /person/{id}/runs</code></pre>
+  </div>
+  <div class="method-summary">get all runs of a person (<span
+      class="nickname">getAllRunsOfAPerson</span>)
+  </div>
+  <div class="method-notes"></div>
+
+  <h3 class="field-label">Path parameters</h3>
+  <div class="field-items">
+    <div class="param">id (required)</div>
+
+    <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; format: int32
+    </div>
+  </div>  <!-- field-items -->
+
+
+  <h3 class="field-label">Return type</h3>
+  <div class="return-type">
+    array[<a href="#Category">Category</a>]
+
+  </div>
+
+  <!--Todo: process Response Object and its headers, schema, examples -->
+
+  <h3 class="field-label">Example data</h3>
+  <div class="example-data-content-type">Content-Type: application/json</div>
+  <pre class="example"><code>{
+  "maxPerson" : -1,
+  "ageRange" : [ 0, 0 ],
+  "participantList" : [ {
+    "listCategory" : [ null, null ],
+    "firstName" : "Sabrina",
+    "lastName" : "Hillow",
+    "birthdate" : "2000-01-23",
+    "id" : 3010
+  }, {
+    "listCategory" : [ null, null ],
+    "firstName" : "Sabrina",
+    "lastName" : "Hillow",
+    "birthdate" : "2000-01-23",
+    "id" : 3010
+  } ],
+  "dateOfRun" : "2000-01-23",
+  "registrationFees" : 45.0,
+  "name" : "Semi-Marathon",
+  "id" : 2020
+}</code></pre>
+
+  <h3 class="field-label">Produces</h3>
+  This API call produces the following media types according to the <span
+      class="header">Accept</span> request header;
+  the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+  <ul>
+    <li><code>application/json</code></li>
+  </ul>
+
+  <h3 class="field-label">Responses</h3>
+  <h4 class="field-label">200</h4>
+  successful operation
+
+</div> <!-- method -->
+<hr/>
+<div class="method"><a name="getPeople"/>
+  <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /person</code></pre>
+  </div>
+  <div class="method-summary">List all people (<span class="nickname">getPeople</span>)</div>
+  <div class="method-notes"></div>
+
+
+  <h3 class="field-label">Return type</h3>
+  <div class="return-type">
+    array[<a href="#Person">Person</a>]
+
+  </div>
+
+  <!--Todo: process Response Object and its headers, schema, examples -->
+
+  <h3 class="field-label">Example data</h3>
+  <div class="example-data-content-type">Content-Type: application/json</div>
+  <pre class="example"><code>{
+  "listCategory" : [ null, null ],
+  "firstName" : "Sabrina",
+  "lastName" : "Hillow",
+  "birthdate" : "2000-01-23",
+  "id" : 3010
+}</code></pre>
+
+  <h3 class="field-label">Produces</h3>
+  This API call produces the following media types according to the <span
+      class="header">Accept</span> request header;
+  the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+  <ul>
+    <li><code>application/json</code></li>
+  </ul>
+
+  <h3 class="field-label">Responses</h3>
+  <h4 class="field-label">200</h4>
+  successful operation
+
+</div> <!-- method -->
+<hr/>
+<div class="method"><a name="getPersonById"/>
+  <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span
+        class="http-method">get</span> /person/{id}</code></pre>
+  </div>
+  <div class="method-summary">Get an existing person by id (<span
+      class="nickname">getPersonById</span>)
+  </div>
+  <div class="method-notes"></div>
+
+  <h3 class="field-label">Path parameters</h3>
+  <div class="field-items">
+    <div class="param">id (required)</div>
+
+    <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of the person
+      that have to be getted format: int32
+    </div>
+  </div>  <!-- field-items -->
+
+
+  <h3 class="field-label">Return type</h3>
+  <div class="return-type">
+    <a href="#Person">Person</a>
+
+  </div>
+
+  <!--Todo: process Response Object and its headers, schema, examples -->
+
+  <h3 class="field-label">Example data</h3>
+  <div class="example-data-content-type">Content-Type: application/json</div>
+  <pre class="example"><code>{
+  "listCategory" : [ null, null ],
+  "firstName" : "Sabrina",
+  "lastName" : "Hillow",
+  "birthdate" : "2000-01-23",
+  "id" : 3010
+}</code></pre>
+
+  <h3 class="field-label">Produces</h3>
+  This API call produces the following media types according to the <span
+      class="header">Accept</span> request header;
+  the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+  <ul>
+    <li><code>application/json</code></li>
+  </ul>
+
+  <h3 class="field-label">Responses</h3>
+  <h4 class="field-label">200</h4>
+  successful operation
+  <a href="#Person">Person</a>
+</div> <!-- method -->
+<hr/>
+<div class="method"><a name="modifyFirstAndLastNamePerson"/>
+  <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /person</code></pre>
+  </div>
+  <div class="method-summary">Modify the firstname and the lastname of an existing person (<span
+      class="nickname">modifyFirstAndLastNamePerson</span>)
+  </div>
+  <div class="method-notes"></div>
+
+
+  <h3 class="field-label">Consumes</h3>
+  This API call consumes the following media types via the <span class="header">Content-Type</span>
+  request header:
+  <ul>
+    <li><code>application/x-www-form-urlencoded</code></li>
+  </ul>
+
+
+  <h3 class="field-label">Form parameters</h3>
+  <div class="field-items">
+    <div class="param">id (required)</div>
+
+    <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash; default: null
+      format: int32
+    </div>
+    <div class="param">firstName (required)</div>
+
+    <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash; default: null
+    </div>
+    <div class="param">lastName (required)</div>
+
+    <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash; default: null
+    </div>
+  </div>  <!-- field-items -->
+
+
+  <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+  <h3 class="field-label">Responses</h3>
+  <h4 class="field-label">200</h4>
+  successful operation
+  <a href="#"></a>
+</div> <!-- method -->
+<hr/>
+<div class="method"><a name="registerPersonToMarathon"/>
+  <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /marathon/{id}/category/{idCategory}/person/{idPerson}</code></pre>
+  </div>
+  <div class="method-summary">Register a person to a marathon (<span class="nickname">registerPersonToMarathon</span>)
+  </div>
+  <div class="method-notes"></div>
+
+  <h3 class="field-label">Path parameters</h3>
+  <div class="field-items">
+    <div class="param">id (required)</div>
+
+    <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of the
+      marathon format: int32
+    </div>
+    <div class="param">idCategory (required)</div>
+
+    <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of the
+      category format: int32
+    </div>
+    <div class="param">idPerson (required)</div>
+
+    <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of the person
+      format: int32
+    </div>
+  </div>  <!-- field-items -->
+
+
+  <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+  <h3 class="field-label">Responses</h3>
+  <h4 class="field-label">200</h4>
+  successful operation
+  <a href="#"></a>
+</div> <!-- method -->
+<hr/>
+
+<h2><a name="__Models">Models</a></h2>
+[ Jump to <a href="#__Methods">Methods</a> ]
+
+<h3>Table of Contents</h3>
+<ol>
+  <li><a href="#Category"><code>Category</code> - </a></li>
+  <li><a href="#Marathon"><code>Marathon</code> - </a></li>
+  <li><a href="#Person"><code>Person</code> - </a></li>
+  <li><a href="#body"><code>body</code> - </a></li>
+  <li><a href="#body_1"><code>body_1</code> - </a></li>
+  <li><a href="#body_2"><code>body_2</code> - </a></li>
+  <li><a href="#body_3"><code>body_3</code> - </a></li>
+  <li><a href="#body_4"><code>body_4</code> - </a></li>
+  <li><a href="#body_5"><code>body_5</code> - </a></li>
+</ol>
+
+<div class="model">
+  <h3><a name="Category"><code>Category</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+  <div class='model-description'></div>
+  <div class="field-items">
+    <div class="param">id (optional)</div>
+    <div class="param-desc"><span class="param-type"><a href="#long">Long</a></span> format: int64
+    </div>
+    <div class="param">name (optional)</div>
+    <div class="param-desc"><span class="param-type"><a href="#string">String</a></span></div>
+    <div class="param">dateOfRun (optional)</div>
+    <div class="param-desc"><span class="param-type"><a href="#date">date</a></span> format: date
+    </div>
+    <div class="param">maxPerson (optional)</div>
+    <div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> format:
+      int32
+    </div>
+    <div class="param">registrationFees (optional)</div>
+    <div class="param-desc"><span class="param-type"><a href="#double">Double</a></span> format:
+      double
+    </div>
+    <div class="param">ageRange (optional)</div>
+    <div class="param-desc"><span class="param-type"><a href="#integer">array[Integer]</a></span>
+      format: int32
+    </div>
+    <div class="param">marathon (optional)</div>
+    <div class="param-desc"><span class="param-type"><a href="#Marathon">Marathon</a></span></div>
+    <div class="param">participantList (optional)</div>
+    <div class="param-desc"><span class="param-type"><a href="#Person">array[Person]</a></span>
+    </div>
+  </div>  <!-- field-items -->
+</div>
+<div class="model">
+  <h3><a name="Marathon"><code>Marathon</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+  <div class='model-description'></div>
+  <div class="field-items">
+    <div class="param">id (optional)</div>
+    <div class="param-desc"><span class="param-type"><a href="#long">Long</a></span> format: int64
+    </div>
+    <div class="param">name (optional)</div>
+    <div class="param-desc"><span class="param-type"><a href="#string">String</a></span></div>
+    <div class="param">city (optional)</div>
+    <div class="param-desc"><span class="param-type"><a href="#string">String</a></span></div>
+    <div class="param">listCategories (optional)</div>
+    <div class="param-desc"><span class="param-type"><a href="#Category">array[Category]</a></span>
+    </div>
+  </div>  <!-- field-items -->
+</div>
+<div class="model">
+  <h3><a name="Person"><code>Person</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+  <div class='model-description'></div>
+  <div class="field-items">
+    <div class="param">id (optional)</div>
+    <div class="param-desc"><span class="param-type"><a href="#long">Long</a></span> format: int64
+    </div>
+    <div class="param">firstName (optional)</div>
+    <div class="param-desc"><span class="param-type"><a href="#string">String</a></span></div>
+    <div class="param">lastName (optional)</div>
+    <div class="param-desc"><span class="param-type"><a href="#string">String</a></span></div>
+    <div class="param">birthdate (optional)</div>
+    <div class="param-desc"><span class="param-type"><a href="#date">date</a></span> format: date
+    </div>
+    <div class="param">listCategory (optional)</div>
+    <div class="param-desc"><span class="param-type"><a href="#Category">array[Category]</a></span>
+    </div>
+  </div>  <!-- field-items -->
+</div>
+<div class="model">
+  <h3><a name="body"><code>body</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+  <div class='model-description'></div>
+  <div class="field-items">
+    <div class="param">id</div>
+    <div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> format:
+      int32
+    </div>
+    <div class="param">name</div>
+    <div class="param-desc"><span class="param-type"><a href="#string">String</a></span></div>
+    <div class="param">city</div>
+    <div class="param-desc"><span class="param-type"><a href="#string">String</a></span></div>
+  </div>  <!-- field-items -->
+</div>
+<div class="model">
+  <h3><a name="body_1"><code>body_1</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+  <div class='model-description'></div>
+  <div class="field-items">
+    <div class="param">id</div>
+    <div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> format:
+      int32
+    </div>
+    <div class="param">name</div>
+    <div class="param-desc"><span class="param-type"><a href="#string">String</a></span></div>
+    <div class="param">city</div>
+    <div class="param-desc"><span class="param-type"><a href="#string">String</a></span></div>
+  </div>  <!-- field-items -->
+</div>
+<div class="model">
+  <h3><a name="body_2"><code>body_2</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+  <div class='model-description'></div>
+  <div class="field-items">
+    <div class="param">idCategory</div>
+    <div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> format:
+      int32
+    </div>
+    <div class="param">nameCategory</div>
+    <div class="param-desc"><span class="param-type"><a href="#string">String</a></span></div>
+  </div>  <!-- field-items -->
+</div>
+<div class="model">
+  <h3><a name="body_3"><code>body_3</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+  <div class='model-description'></div>
+  <div class="field-items">
+    <div class="param">idCategory</div>
+    <div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> format:
+      int32
+    </div>
+    <div class="param">nameCategory</div>
+    <div class="param-desc"><span class="param-type"><a href="#string">String</a></span></div>
+    <div class="param">dateOfRunCategory</div>
+    <div class="param-desc"><span class="param-type"><a href="#string">String</a></span></div>
+    <div class="param">maxPersonCategory</div>
+    <div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> format:
+      int32
+    </div>
+    <div class="param">RegistrationFees</div>
+    <div class="param-desc"><span class="param-type"><a href="#string">String</a></span></div>
+    <div class="param">maxAge</div>
+    <div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> format:
+      int32
+    </div>
+    <div class="param">minAge</div>
+    <div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> format:
+      int32
+    </div>
+  </div>  <!-- field-items -->
+</div>
+<div class="model">
+  <h3><a name="body_4"><code>body_4</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+  <div class='model-description'></div>
+  <div class="field-items">
+    <div class="param">id</div>
+    <div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> format:
+      int32
+    </div>
+    <div class="param">firstName</div>
+    <div class="param-desc"><span class="param-type"><a href="#string">String</a></span></div>
+    <div class="param">lastName</div>
+    <div class="param-desc"><span class="param-type"><a href="#string">String</a></span></div>
+  </div>  <!-- field-items -->
+</div>
+<div class="model">
+  <h3><a name="body_5"><code>body_5</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+  <div class='model-description'></div>
+  <div class="field-items">
+    <div class="param">id</div>
+    <div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> format:
+      int32
+    </div>
+    <div class="param">firstName</div>
+    <div class="param-desc"><span class="param-type"><a href="#string">String</a></span></div>
+    <div class="param">lastName</div>
+    <div class="param-desc"><span class="param-type"><a href="#string">String</a></span></div>
+    <div class="param">birthDate</div>
+    <div class="param-desc"><span class="param-type"><a href="#string">String</a></span></div>
+  </div>  <!-- field-items -->
+</div>
 </body>
 </html>

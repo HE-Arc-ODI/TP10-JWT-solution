@@ -1,18 +1,14 @@
 openapi: 3.0.0
-servers:
-  - url: 'https://virtserver.swaggerhub.com/HEG/marathon/1.0.0'
-  - url: 'http://virtserver.swaggerhub.com/HEG/marathon/1.0.0'
 info:
   description: |
-    This is an api to manage marathon
+    API specification and implementation assignment.
   version: "1.0.0-oas3"
   title: Marathon API
-  termsOfService: 'http://swagger.io/terms/'
-  contact:
-    email: apiteam@he-arc.ch
-  license:
-    name: Apache 2.0
-    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+servers:
+- url: http://localhost:8080/rest
+  description: local dev server
+- url: https://salty-fjord-31385.herokuapp.com/rest
+  description: heroku server
 tags:
   - name: Marathon
     description: Everything about marathon
@@ -398,9 +394,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Category'
-externalDocs:
-  description: Find out more about Swagger
-  url: 'http://swagger.io'
 components:
   schemas:
     Marathon:
@@ -480,16 +473,3 @@ components:
             $ref: "#/components/schemas/Category"
       xml:
         name: Person
-  securitySchemes:
-    petstore_auth:
-      type: oauth2
-      flows:
-        implicit:
-          authorizationUrl: 'http://petstore.swagger.io/oauth/dialog'
-          scopes:
-            'write:pets': modify pets in your account
-            'read:pets': read your pets
-    api_key:
-      type: apiKey
-      name: api_key
-      in: header
