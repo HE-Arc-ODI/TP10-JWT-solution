@@ -51,8 +51,7 @@ public class MarathonRest {
   @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
   public Marathon getMarathon(@PathParam("id") Long id) {
     try {
-      Marathon marathon = service.getMarathon(id);
-      return marathon;
+      return service.getMarathon(id);
     } catch (MarathonException e) {
       e.printStackTrace();
       throw new WebApplicationException(Status.NOT_FOUND);

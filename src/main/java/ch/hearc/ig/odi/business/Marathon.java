@@ -22,26 +22,26 @@ public class Marathon implements Serializable {
   private Long id;
   private String name;
   private String city;
-  private List listCategories;
+  private List<Category> listCategories;
 
   public Marathon() {
-    this.listCategories = new ArrayList();
+    listCategories = new ArrayList<>();
   }
 
   public Marathon(Long id, String name, String city) {
     this.id = id;
     this.name = name;
     this.city = city;
-    this.listCategories = new ArrayList();
+    listCategories = new ArrayList<>();
 
   }
 
   public Marathon(Marathon m, Category c) {
-    this.id = m.getId();
-    this.name = m.getName();
-    this.city = m.getCity();
-    this.listCategories = new ArrayList();
-    this.listCategories.add(c);
+    id = m.getId();
+    name = m.getName();
+    city = m.getCity();
+    listCategories = new ArrayList<>();
+    listCategories.add(c);
   }
 
   @XmlElement
@@ -49,8 +49,8 @@ public class Marathon implements Serializable {
     return listCategories;
   }
 
-  public void setListCategories(List listCategory) {
-    this.listCategories = listCategory;
+  public void setListCategories(List<Category> listCategory) {
+    listCategories = listCategory;
   }
 
   @XmlElement
@@ -81,7 +81,7 @@ public class Marathon implements Serializable {
   }
 
   public void addCategory(Category category) {
-    this.listCategories.add(category);
+    listCategories.add(category);
     category.setMarathon(this);
   }
 

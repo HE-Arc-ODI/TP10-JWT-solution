@@ -32,7 +32,7 @@ public class RestService {
   private Map<Long, Marathon> mapMarathon;
   private Map<Long, Person> mapPeople;
 
-  DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+  private final DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
 
   /**
    * Empty constructor. All initialization should be done here.
@@ -129,10 +129,10 @@ public class RestService {
 
   public List<Marathon> getMarathons() {
     List l = new ArrayList<Marathon>();
-
     Iterator i = mapMarathon.keySet().iterator();
     while (i.hasNext()) {
-      l.add(mapMarathon.get((Long) i.next()));
+      Marathon marathon = (Marathon) mapMarathon.get((Long) i.next());
+      l.add(marathon);
     }
     return l;
 
@@ -189,7 +189,7 @@ public class RestService {
       throws MarathonException {
     Marathon m = this.mapMarathon.get(idMarathon);
     if (m != null) {
-      if (idCategory != null && nameCategory.matches("^\\s*$") != true && dateOfRunCategory != null
+      if (idCategory != null && !nameCategory.matches("^\\s*$") && dateOfRunCategory != null
           && maxPerson != null && registrationFees != null && maxAge != 0 && minAge != 0) {
         m.addCategory(
             new Category(idCategory, nameCategory, dateOfRunCategory, maxPerson, registrationFees,
@@ -207,7 +207,7 @@ public class RestService {
       throws MarathonException {
     Marathon m = this.mapMarathon.get(idMarathon);
     if (m != null) {
-      if (idCategory != null && nameCategory.matches("^\\s*$") != true) {
+      if (idCategory != null && !nameCategory.matches("^\\s*$")) {
         Category c = m.getCategory(idCategory);
         c.setName(nameCategory);
         return m;
@@ -233,11 +233,11 @@ public class RestService {
   }
 
   public List<Person> getPersons() {
-    List l = new ArrayList<Marathon>();
-
+    List l = new ArrayList<Person>();
     Iterator i = mapPeople.keySet().iterator();
     while (i.hasNext()) {
-      l.add(mapPeople.get((Long) i.next()));
+      Person person = mapPeople.get((Long) i.next());
+      l.add(person);
     }
     return l;
   }
@@ -359,10 +359,10 @@ public class RestService {
     List l = new ArrayList<Marathon>();
     Person p = this.mapPeople.get(id);
     if (p != null) {
-      List lc = p.getListCategory();
+      List lc = p.getCategories();
       int j = 0;
       while (lc.size() > j) {
-        l.add(new Marathon(((Category) lc.get(j)).getMarathon(), ((Category) lc.get(j))));
+        l.add(new Marathon(((Category) lc.get(j)).getMarathon(), ((Category) lc.get(j)))); // FIXME: pourquoi créer un nouvel objet marathon?
         j++;
       }
       return l;

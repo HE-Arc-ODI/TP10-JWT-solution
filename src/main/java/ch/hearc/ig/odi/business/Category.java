@@ -31,10 +31,10 @@ public class Category implements Serializable {
   private Double registrationFees;
   private int[] ageRange;
   private Marathon marathon;
-  private List participantList;
+  private List<Person> participantList;
 
   public Category() {
-    this.participantList = new ArrayList();
+    participantList = new ArrayList<Person>();
   }
 
   public Category(Long id, String name, Date dateOfRun, Integer maxPerson, Double registrationFees,
@@ -45,7 +45,7 @@ public class Category implements Serializable {
     this.maxPerson = maxPerson;
     this.registrationFees = registrationFees;
     this.ageRange = new int[]{AgeMax, AgeMin};
-    this.participantList = new ArrayList();
+    participantList = new ArrayList<Person>();
   }
 
   @XmlElement
@@ -108,12 +108,12 @@ public class Category implements Serializable {
     return participantList;
   }
 
-  public void setParticipantList(List participantList) {
+  public void setParticipantList(List<Person> participantList) {
     this.participantList = participantList;
   }
 
   public void addPerson(Person person) {
-    this.participantList.add(person);
+    participantList.add(person);
     person.addMarathon(this);
   }
 

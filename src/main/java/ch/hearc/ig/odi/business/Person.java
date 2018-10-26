@@ -26,10 +26,10 @@ public class Person implements Serializable {
   private String firstName;
   private String lastName;
   private Date dateBirth;
-  private List listCategory;
+  private List<Category> categories;
 
   public Person() {
-    this.listCategory = new ArrayList();
+    categories = new ArrayList<>();
   }
 
   public Person(Long id, String firstName, String lastName, Date dateBirth) {
@@ -37,17 +37,17 @@ public class Person implements Serializable {
     this.firstName = firstName;
     this.lastName = lastName;
     this.dateBirth = dateBirth;
-    this.listCategory = new ArrayList();
+    categories = new ArrayList<>();
   }
 
   @XmlTransient
   @JsonIgnore
-  public List getListCategory() {
-    return listCategory;
+  public List getCategories() {
+    return categories;
   }
 
-  public void setListCategory(List listCategory) {
-    this.listCategory = listCategory;
+  public void setCategories(List<Category> categories) {
+    this.categories = categories;
   }
 
   @XmlElement
@@ -88,6 +88,6 @@ public class Person implements Serializable {
   }
 
   public void addMarathon(Category category) {
-    this.listCategory.add(category);
+    categories.add(category);
   }
 }
