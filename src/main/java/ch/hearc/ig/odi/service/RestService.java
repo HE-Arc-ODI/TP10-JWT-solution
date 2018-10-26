@@ -325,10 +325,6 @@ public class RestService {
     int maxAge = c.getAgeRange()[0];
     int minAge = c.getAgeRange()[1];
 
-    System.out.println(year);
-    System.out.println(maxAge);
-    System.out.println(minAge);
-
     if (year < maxAge && year < minAge || year > maxAge && year > minAge) {
       throw new MarathonException("Person can't be run in this category");
     }
