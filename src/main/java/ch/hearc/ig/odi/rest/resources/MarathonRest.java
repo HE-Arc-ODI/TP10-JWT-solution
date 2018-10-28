@@ -44,6 +44,12 @@ public class MarathonRest {
   public List<Marathon> getMarathons() {
     return service.getMarathons();
   }
+//
+//  @GET
+////  @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+//  public String getMarathons() {
+//    return "marathon rest";
+//  }
 
 
   @Path("/{id}")
