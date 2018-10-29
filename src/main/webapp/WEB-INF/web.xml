@@ -11,7 +11,6 @@
       <param-name>javax.ws.rs.Application</param-name>
       <param-value>ch.hearc.ig.odi.config.ResourceLoader</param-value>
     </init-param>
-    <load-on-startup>1</load-on-startup>
     <init-param>
       <param-name>jersey.config.server.provider.packages</param-name>
       <param-value>
@@ -19,6 +18,7 @@
         com.fasterxml.jackson.jaxrs.json
       </param-value>
     </init-param>
+    <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
     <servlet-name>REST Servlet</servlet-name>

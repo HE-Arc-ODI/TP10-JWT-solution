@@ -45,7 +45,6 @@ public class MarathonRest {
     return service.getMarathons();
   }
 
-
   @Path("/{id}")
   @GET
   @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -72,7 +71,7 @@ public class MarathonRest {
 
   @POST
   @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-  public Marathon createMarathon(@FormParam("id") Long id, @FormParam("name") String name,
+  public Marathon createMarathon(@FormParam("id") Long id, @FormParam("name") String name, // FIXME: remove ID from form params!
       @FormParam("city") String city) {
     try {
       return service.createMarathon(id, name, city);
@@ -106,10 +105,7 @@ public class MarathonRest {
       Date d = service.getDate(dateOfRunCategory);
       return service.createCategory(id, idCategory, nameCategory, d, maxPerson,
           Double.parseDouble(registrationFees), maxAge, minAge);
-    } catch (ParseException e) {
-      e.printStackTrace();
-      throw new WebApplicationException(Response.Status.BAD_REQUEST);
-    } catch (MarathonException e) {
+    } catch (ParseException | MarathonException e) {
       e.printStackTrace();
       throw new WebApplicationException(Response.Status.BAD_REQUEST);
     }
@@ -148,10 +144,7 @@ public class MarathonRest {
       @PathParam("idCategory") Long idCategory, @PathParam("idPerson") Long idPerson) {
     try {
       return service.addPersonnCategory(id, idCategory, idPerson);
-    } catch (MarathonException e) {
-      e.printStackTrace();
-      throw new WebApplicationException(Response.Status.BAD_REQUEST);
-    } catch (PersonException e) {
+    } catch (MarathonException | PersonException e) {
       e.printStackTrace();
       throw new WebApplicationException(Response.Status.BAD_REQUEST);
     }
@@ -164,10 +157,7 @@ public class MarathonRest {
       @PathParam("idCategory") Long idCategory, @PathParam("idPerson") Long idPerson) {
     try {
       return service.deletePersonnCategory(id, idCategory, idPerson);
-    } catch (MarathonException e) {
-      e.printStackTrace();
-      throw new WebApplicationException(Response.Status.BAD_REQUEST);
-    } catch (PersonException e) {
+    } catch (MarathonException | PersonException e) {
       e.printStackTrace();
       throw new WebApplicationException(Response.Status.BAD_REQUEST);
     }

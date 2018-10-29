@@ -34,18 +34,18 @@ public class Category implements Serializable {
   private List<Person> participantList;
 
   public Category() {
-    participantList = new ArrayList<Person>();
+    participantList = new ArrayList<>();
   }
 
   public Category(Long id, String name, Date dateOfRun, Integer maxPerson, Double registrationFees,
-      int AgeMax, int AgeMin) {
+      int yearOfBirthOldest, int yearOfBirthYoungest) {
     this.id = id;
     this.name = name;
     this.dateOfRun = dateOfRun;
     this.maxPerson = maxPerson;
     this.registrationFees = registrationFees;
-    this.ageRange = new int[]{AgeMax, AgeMin};
-    participantList = new ArrayList<Person>();
+    this.ageRange = new int[]{yearOfBirthOldest, yearOfBirthYoungest};
+    participantList = new ArrayList<>();
   }
 
   @XmlElement
@@ -120,8 +120,8 @@ public class Category implements Serializable {
 
   public int getIndex(Long id) throws PersonException {
     for (int i = 0; i < participantList.size(); i++) {
-      Person p = (Person) participantList.get(i);
-      if (p.getId().longValue() == (id.longValue())) {
+      Person p = participantList.get(i);
+      if (p.getId() == (id.longValue())) {
         return i;
       }
     }

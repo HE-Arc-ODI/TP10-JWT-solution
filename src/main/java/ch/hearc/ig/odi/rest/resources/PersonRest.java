@@ -64,10 +64,7 @@ public class PersonRest {
     try {
       Date d = service.getDate(birthdate);
       return service.createPerson(id, firstName, lastName, d);
-    } catch (ParseException e) {
-      e.printStackTrace();
-      throw new WebApplicationException(Response.Status.BAD_REQUEST);
-    } catch (PersonException e) {
+    } catch (ParseException | PersonException e) {
       e.printStackTrace();
       throw new WebApplicationException(Response.Status.BAD_REQUEST);
     }

@@ -86,10 +86,9 @@ public class Marathon implements Serializable {
   }
 
   public Category getCategory(Long id) {
-    for (int i = 0; i < listCategories.size(); i++) {
-      Category c = (Category) listCategories.get(i);
-      if (c.getId().longValue() == (id.longValue())) {
-        return (Category) listCategories.get(i);
+    for (Category listCategory : listCategories) {
+      if (((Category) listCategory).getId() == (id.longValue())) {
+        return listCategory;
       }
     }
     return null;
@@ -97,8 +96,8 @@ public class Marathon implements Serializable {
 
   public int getIndex(Long id) throws MarathonException {
     for (int i = 0; i < listCategories.size(); i++) {
-      Category c = (Category) listCategories.get(i);
-      if (c.getId().longValue() == (id.longValue())) {
+      Category c = listCategories.get(i);
+      if (c.getId() == (id.longValue())) {
         return i;
       }
     }
