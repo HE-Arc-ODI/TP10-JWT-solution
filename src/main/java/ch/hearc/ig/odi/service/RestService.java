@@ -20,7 +20,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -39,8 +38,8 @@ public class RestService {
    */
   public RestService() throws ParseException {
 
-    this.mapMarathon = new HashMap<Long, Marathon>();
-    this.mapPeople = new HashMap<Long, Person>();
+    this.mapMarathon = new HashMap<>();
+    this.mapPeople = new HashMap<>();
 
     //create marathon
     Marathon m0 = new Marathon(Long.parseLong("1000"), "Swiss Alpine Marathon", "Davos");
@@ -129,9 +128,8 @@ public class RestService {
 
   public List<Marathon> getMarathons() {
     List l = new ArrayList<Marathon>();
-    Iterator i = mapMarathon.keySet().iterator();
-    while (i.hasNext()) {
-      Marathon marathon = (Marathon) mapMarathon.get((Long) i.next());
+    for (Object o : mapMarathon.keySet()) {
+      Marathon marathon = mapMarathon.get(o);
       l.add(marathon);
     }
     return l;
@@ -234,9 +232,8 @@ public class RestService {
 
   public List<Person> getPersons() {
     List l = new ArrayList<Person>();
-    Iterator i = mapPeople.keySet().iterator();
-    while (i.hasNext()) {
-      Person person = mapPeople.get((Long) i.next());
+    for (Object o : mapPeople.keySet()) {
+      Person person = mapPeople.get(o);
       l.add(person);
     }
     return l;
