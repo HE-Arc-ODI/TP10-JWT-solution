@@ -2,7 +2,6 @@ package ch.hearc.ig.odi.injection;
 
 import ch.hearc.ig.odi.service.RestService;
 import java.text.ParseException;
-import javax.inject.Singleton;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 
 /**
@@ -17,6 +16,5 @@ public class ServiceBinder extends AbstractBinder {
     } catch (ParseException e) {
       e.printStackTrace();
     }
-//    bind(RestService.class).to(RestService.class).in(Singleton.class);
   }
 }
