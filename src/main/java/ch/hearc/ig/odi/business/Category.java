@@ -38,13 +38,13 @@ public class Category implements Serializable {
   }
 
   public Category(Long id, String name, Date dateOfRun, Integer maxPerson, Double registrationFees,
-      int AgeMax, int AgeMin) {
+      int yearOfBirthOldest, int yearOfBirthYoungest) {
     this.id = id;
     this.name = name;
     this.dateOfRun = dateOfRun;
     this.maxPerson = maxPerson;
     this.registrationFees = registrationFees;
-    this.ageRange = new int[]{AgeMax, AgeMin};
+    this.ageRange = new int[]{yearOfBirthOldest, yearOfBirthYoungest};
     participantList = new ArrayList<Person>();
   }
 

@@ -3,6 +3,7 @@ package ch.hearc.ig.odi.rest.resources;
 import static org.junit.Assert.assertEquals;
 
 import ch.hearc.ig.odi.business.Marathon;
+import ch.hearc.ig.odi.exception.MarathonException;
 import ch.hearc.ig.odi.injection.ServiceBinder;
 import ch.hearc.ig.odi.service.RestService;
 import javax.inject.Inject;
@@ -11,24 +12,14 @@ import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
-import org.glassfish.hk2.api.ServiceLocator;
-import org.glassfish.hk2.utilities.ServiceLocatorUtilities;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
-import org.junit.Before;
 import org.junit.Test;
 
 public class MarathonRestTest extends JerseyTest {
 
   @Inject
-  private RestService service;
-
-
-  @Before
-  public void setUpInjection() {
-    ServiceLocator locator = ServiceLocatorUtilities.bind(new ServiceBinder());
-    locator.inject(this);
-  }
+  RestService service;
 
   @Test
   public void createMarathonReturnsExpectedCode() {
@@ -67,6 +58,31 @@ public class MarathonRestTest extends JerseyTest {
     String actualName = actualMarathon.getName();
     Long actualId = actualMarathon.getId();
     String actualCity = actualMarathon.getCity();
+
+    //Assert
+    assertEquals(expectedId, actualId);
+    assertEquals(expectedName, actualName);
+    assertEquals(expectedCity, actualCity);
+  }
+
+  @Test
+  public void createMarathonAddedToService() throws MarathonException {
+    // Arrange
+    Long expectedId = 9999L;
+    String expectedName = "Test Marathon";
+    String expectedCity = "New Jersey";
+
+    // Act
+    MultivaluedMap<String, String> formData = new MultivaluedHashMap<>();
+    formData.add("id", expectedId.toString());
+    formData.add("name", expectedName);
+    formData.add("city", expectedCity);
+    final Response response = target("marathon").request().post(Entity.form(formData));
+    Marathon actualMarathon = service.getMarathon(response.readEntity(Marathon.class).getId());
+    String actualName = actualMarathon.getName();
+    Long actualId = actualMarathon.getId();
+    String actualCity = actualMarathon.getCity();
+
 
     //Assert
     assertEquals(expectedId, actualId);
