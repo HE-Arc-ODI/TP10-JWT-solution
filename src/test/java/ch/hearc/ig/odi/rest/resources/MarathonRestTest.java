@@ -5,9 +5,12 @@ import static org.junit.Assert.assertEquals;
 import ch.hearc.ig.odi.business.Marathon;
 import ch.hearc.ig.odi.injection.ServiceBinder;
 import ch.hearc.ig.odi.service.RestService;
-import java.util.List;
 import javax.inject.Inject;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Application;
+import javax.ws.rs.core.MultivaluedHashMap;
+import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Response;
 import org.glassfish.hk2.api.ServiceLocator;
 import org.glassfish.hk2.utilities.ServiceLocatorUtilities;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -22,17 +25,71 @@ public class MarathonRestTest extends JerseyTest {
 
 
   @Before
-  public void setUpInjection() throws Exception {
+  public void setUpInjection() {
     ServiceLocator locator = ServiceLocatorUtilities.bind(new ServiceBinder());
     locator.inject(this);
   }
 
   @Test
-  public void testSayHello() {
-    List<Marathon> expected = service.getMarathons();
+  public void createMarathonReturnsExpectedCode() {
+    // Arrange
+    long expectedId = 9999L;
+    String expectedName = "Test Marathon";
+    String expectedCity = "New Jersey";
+    int expectedStatus = 200;
 
-    final List<Marathon> response = target("marathon").request().get(List.class);
-    assertEquals(expected, response);
+    // Act
+    MultivaluedMap<String, String> formData = new MultivaluedHashMap<>();
+    formData.add("id", Long.toString(expectedId));
+    formData.add("name", expectedName);
+    formData.add("city", expectedCity);
+    final Response response = target("marathon").request().post(Entity.form(formData));
+    int responseStatus = response.getStatus();
+
+    //Assert
+    assertEquals(expectedStatus, responseStatus);
+  }
+
+  @Test
+  public void createMarathonReturnsExpectedObject() {
+    // Arrange
+    Long expectedId = 9999L;
+    String expectedName = "Test Marathon";
+    String expectedCity = "New Jersey";
+
+    // Act
+    MultivaluedMap<String, String> formData = new MultivaluedHashMap<>();
+    formData.add("id", expectedId.toString());
+    formData.add("name", expectedName);
+    formData.add("city", expectedCity);
+    final Response response = target("marathon").request().post(Entity.form(formData));
+    Marathon actualMarathon = response.readEntity(Marathon.class);
+    String actualName = actualMarathon.getName();
+    Long actualId = actualMarathon.getId();
+    String actualCity = actualMarathon.getCity();
+
+    //Assert
+    assertEquals(expectedId, actualId);
+    assertEquals(expectedName, actualName);
+    assertEquals(expectedCity, actualCity);
+  }
+
+  @Test
+  public void createIncompleteMarathonReturnsErrorCode() {
+    // Arrange
+    String expectedName = "Test Marathon";
+    String expectedCity = "New Jersey";
+    int expectedStatus = 400;
+
+    // Act
+    MultivaluedMap<String, String> formData = new MultivaluedHashMap<>();
+    formData.add("name", expectedName);
+    formData.add("city", expectedCity);
+    final Response response = target("marathon").request().post(Entity.form(formData));
+    int responseStatus = response.getStatus();
+
+    //Assert
+    assertEquals(expectedStatus, responseStatus);
   }
 
   @Override
