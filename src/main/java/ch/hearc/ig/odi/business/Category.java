@@ -117,6 +117,15 @@ public class Category implements Serializable {
     person.addMarathon(this);
   }
 
+  public Person getPerson(Long id) {
+    for (Person person : this.participantList) {
+      if (person.getId() == (id.longValue())) {
+        return person;
+      }
+    }
+    return null;
+  }
+
 
   public int getIndex(Long id) throws PersonException {
     for (int i = 0; i < participantList.size(); i++) {
