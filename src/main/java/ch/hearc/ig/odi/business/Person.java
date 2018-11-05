@@ -90,4 +90,8 @@ public class Person implements Serializable {
   public void addMarathon(Category category) {
     categories.add(category);
   }
+
+  public void deleteCategory(Long idCategory) {
+    this.categories.remove(idCategory);
+  }
 }

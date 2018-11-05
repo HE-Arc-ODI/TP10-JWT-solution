@@ -336,6 +336,8 @@ public class RestService {
         Category c = m.getCategory(idCategory);
         if (c != null) {
           if (idPerson != null) {
+            Person p = (Person)c.getParticipantList().get(idPerson.intValue());
+            p.deleteCategory(idCategory);
             c.deletePerson(idPerson);
             return c;
           } else {
