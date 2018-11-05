@@ -1,26 +1,29 @@
 openapi: 3.0.0
+servers:
+- url: 'https://salty-fjord-31385.herokuapp.com/rest'
 info:
   description: |
-    API specification and implementation assignment.
+    This is an api to manage marathon
   version: "1.0.0-oas3"
   title: Marathon API
-servers:
-- url: http://localhost:8080/rest
-  description: local dev server
-- url: https://salty-fjord-31385.herokuapp.com/rest
-  description: heroku server
+  termsOfService: 'http://swagger.io/terms/'
+  contact:
+    email: apiteam@he-arc.ch
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
 tags:
-  - name: Marathon
-    description: Everything about marathon
-  - name: Category
-    description: Everything about category
-  - name: Person
-    description: Everything about person
+- name: Marathon
+  description: Everything about marathon
+- name: Category
+  description: Everything about category
+- name: Person
+  description: Everything about person
 paths:
   /marathon:
     get:
       tags:
-        - Marathon
+      - Marathon
       summary: List all the marathons
       operationId: getMarathons
       responses:
@@ -34,7 +37,7 @@ paths:
                   $ref: '#/components/schemas/Marathon'
     post:
       tags:
-        - Marathon
+      - Marathon
       summary: Add a new marathon
       operationId: addMarathon
       requestBody:
@@ -51,15 +54,15 @@ paths:
                 city:
                   type: string
               required:
-                - id
-                - name
-                - city
+              - id
+              - name
+              - city
       responses:
         '200':
           description: successful operation
     put:
       tags:
-        - Marathon
+      - Marathon
       summary: Update an existing marathon
       operationId: updateMarathon
       requestBody:
@@ -76,9 +79,9 @@ paths:
                 city:
                   type: string
               required:
-                - id
-                - name
-                - city
+              - id
+              - name
+              - city
       responses:
         '200':
           description: successful operation
@@ -89,47 +92,47 @@ paths:
       summary: Get an existing marathon by id
       operationId: getMarathonById
       parameters:
-        - name: id
-          in: path
-          required: true
-          description: id of the marathon that have to be getted
-          schema:
-            type: integer
+      - name: id
+        in: path
+        required: true
+        description: id of the marathon that have to be getted
+        schema:
+          type: integer
       responses:
         '200':
           description: successful operation
           content:
             application/json:
               schema:
-                  $ref: '#/components/schemas/Marathon'
+                $ref: '#/components/schemas/Marathon'
     delete:
       tags:
       - Marathon
       summary: Delete an existing marathon
       operationId: deleteMarathonById
       parameters:
-        - name: id
-          in: path
-          required: true
-          description: id of the marathon that have to be deleted
-          schema:
-            type: integer
+      - name: id
+        in: path
+        required: true
+        description: id of the marathon that have to be deleted
+        schema:
+          type: integer
       responses:
         '200':
           description: successful operation
   /marathon/{id}/category:
     post:
       tags:
-        - Category
+      - Category
       summary: Add a new category to an existing marathon
       operationId: addCategory
       parameters:
-        - name: id
-          in: path
-          required: true
-          description: id of the marathon in which the category have to be added
-          schema:
-            type: integer
+      - name: id
+        in: path
+        required: true
+        description: id of the marathon in which the category have to be added
+        schema:
+          type: integer
       requestBody:
         required: true
         content:
@@ -141,39 +144,44 @@ paths:
                   type: integer
                 nameCategory:
                   type: string
-                dateOfRunCategory:
+                DateOfRunCategory:
                   type: string
+                  format: date
                 maxPersonCategory:
                   type: integer
+                  format: int32
                 RegistrationFees:
-                  type: string
+                  type: integer
+                  format: double
                 maxAge:
                   type: integer
+                  format: int32
                 minAge:
                   type: integer
+                  format: int32
               required:
-                - idCategory
-                - nameCategory
-                - dateOfRunCategory
-                - maxPersonCategory
-                - RegistrationFees
-                - maxAge
-                - minAge
+              - idCategory
+              - nameCategory
+              - DateOfRunCategory
+              - maxPersonCategory
+              - RegistrationFees
+              - maxAge
+              - minAge
       responses:
         '200':
           description: successful operation
     put:
       tags:
-        - Category
+      - Category
       summary: Modify the name of an existing category
       operationId: modifyCategory
       parameters:
-        - name: id
-          in: path
-          required: true
-          description: id of the marathon in which the category have to be modified
-          schema:
-            type: integer
+      - name: id
+        in: path
+        required: true
+        description: id of the marathon in which the category have to be modified
+        schema:
+          type: integer
       requestBody:
         required: true
         content:
@@ -185,39 +193,39 @@ paths:
                   type: integer
                 nameCategory:
                   type: string
-                
+
               required:
-                - idCategory
-                - nameCategory
+              - idCategory
+              - nameCategory
       responses:
         '200':
           description: successful operation
   /marathon/{id}/category/{idCategory}:
     delete:
       tags:
-        - Category
+      - Category
       summary: Delete an existing category
       operationId: deleteCategoryById
       parameters:
-        - name: id
-          in: path
-          required: true
-          description: id of the marathon in which the category have to be deleted
-          schema:
-            type: integer
-        - name: idCategory
-          in: path
-          required: true
-          description: id of the category that have to be deleted
-          schema:
-            type: integer
+      - name: id
+        in: path
+        required: true
+        description: id of the marathon in which the category have to be deleted
+        schema:
+          type: integer
+      - name: idCategory
+        in: path
+        required: true
+        description: id of the category that have to be deleted
+        schema:
+          type: integer
       responses:
         '200':
           description: successful operation
   /person:
     get:
       tags:
-        - Person
+      - Person
       summary: List all people
       operationId: getPeople
       responses:
@@ -231,7 +239,7 @@ paths:
                   $ref: '#/components/schemas/Person'
     post:
       tags:
-        - Person
+      - Person
       summary: Add a new person
       operationId: addPerson
       requestBody:
@@ -249,17 +257,18 @@ paths:
                   type: string
                 birthDate:
                   type: string
+                  format: date
               required:
-                - id
-                - firstName
-                - lastName
-                - birthDate
+              - id
+              - firstName
+              - lastName
+              - birthDate
       responses:
         '200':
           description: successful operation
     put:
       tags:
-        - Person
+      - Person
       summary: Modify the firstname and the lastname of an existing person
       operationId: modifyFirstAndLastNamePerson
       requestBody:
@@ -276,13 +285,13 @@ paths:
                 lastName:
                   type: string
               required:
-                - id
-                - firstName
-                - lastName
+              - id
+              - firstName
+              - lastName
       responses:
         '200':
           description: successful operation
-      
+
   /person/{id}:
     get:
       tags:
@@ -290,12 +299,12 @@ paths:
       summary: Get an existing person by id
       operationId: getPersonById
       parameters:
-        - name: id
-          in: path
-          required: true
-          description: id of the person that have to be getted
-          schema:
-            type: integer
+      - name: id
+        in: path
+        required: true
+        description: id of the person that have to be getted
+        schema:
+          type: integer
       responses:
         '200':
           description: successful operation
@@ -309,82 +318,82 @@ paths:
       summary: Delete an existing person by id
       operationId: deletePersonById
       parameters:
-        - name: id
-          in: path
-          required: true
-          description: id of the person that have to be deleted
-          schema:
-            type: integer
+      - name: id
+        in: path
+        required: true
+        description: id of the person that have to be deleted
+        schema:
+          type: integer
       responses:
         '200':
           description: successful operation
   /marathon/{id}/category/{idCategory}/person/{idPerson}:
     put:
       tags:
-        - Person
+      - Person
       summary: Register a person to a marathon
       operationId: registerPersonToMarathon
       parameters:
-        - name: id
-          in: path
-          description: id of the marathon
-          required: true
-          schema:
-            type: integer
-        - name: idCategory
-          in: path
-          description: id of the category
-          required: true
-          schema:
-            type: integer
-        - name: idPerson
-          in: path
-          description: id of the person
-          required: true
-          schema:
-            type: integer
+      - name: id
+        in: path
+        description: id of the marathon
+        required: true
+        schema:
+          type: integer
+      - name: idCategory
+        in: path
+        description: id of the category
+        required: true
+        schema:
+          type: integer
+      - name: idPerson
+        in: path
+        description: id of the person
+        required: true
+        schema:
+          type: integer
       responses:
         '200':
           description: successful operation
     delete:
       tags:
-        - Person
+      - Person
       summary: delete a person from a marathon
       operationId: deletePersonFromMarathon
       parameters:
-        - name: id
-          in: path
-          description: id of the marathon
-          required: true
-          schema:
-            type: integer
-        - name: idCategory
-          in: path
-          description: id of the category
-          required: true
-          schema:
-            type: integer
-        - name: idPerson
-          in: path
-          description: id of the person
-          required: true
-          schema:
-            type: integer
+      - name: id
+        in: path
+        description: id of the marathon
+        required: true
+        schema:
+          type: integer
+      - name: idCategory
+        in: path
+        description: id of the category
+        required: true
+        schema:
+          type: integer
+      - name: idPerson
+        in: path
+        description: id of the person
+        required: true
+        schema:
+          type: integer
       responses:
         '200':
           description: successful operation
   /person/{id}/runs:
     get:
       tags:
-        - Person
+      - Person
       summary: get all runs of a person
       operationId: getAllRunsOfAPerson
       parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
       responses:
         '200':
           description: successful operation
@@ -394,6 +403,9 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Category'
+externalDocs:
+  description: Find out more about Swagger
+  url: 'http://swagger.io'
 components:
   schemas:
     Marathon:
@@ -427,7 +439,6 @@ components:
           example: Semi-Marathon
         dateOfRun:
           type: string
-          format: date
           example: "20.10.2018"
         maxPerson:
           type: integer
@@ -440,8 +451,8 @@ components:
         ageRange:
           type: array
           items:
-              type: integer
-              format: int32
+            type: integer
+            format: int32
         marathon:
           $ref: "#/components/schemas/Marathon"
         participantList:
@@ -473,3 +484,16 @@ components:
             $ref: "#/components/schemas/Category"
       xml:
         name: Person
+  securitySchemes:
+    petstore_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: 'http://petstore.swagger.io/oauth/dialog'
+          scopes:
+            'write:pets': modify pets in your account
+            'read:pets': read your pets
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header
