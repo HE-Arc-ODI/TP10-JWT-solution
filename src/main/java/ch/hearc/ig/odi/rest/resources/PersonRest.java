@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -34,20 +35,20 @@ import javax.ws.rs.core.Response.Status;
 
 @Named
 @Path("/person")
+@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 public class PersonRest {
 
   @Inject
   private RestService service;
 
   @GET
-  @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
   public List<Person> getPersons() {
     return service.getPersons();
   }
 
-  @Path("/{id}")
+  @Path("{id}")
   @GET
-  @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
   public Person getPerson(@PathParam("id") Long id) {
     try {
       return service.getPerson(id);
@@ -58,7 +59,6 @@ public class PersonRest {
   }
 
   @POST
-  @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
   public Person createPerson(@FormParam("id") Long id, @FormParam("firstName") String firstName,
       @FormParam("lastName") String lastName, @FormParam("birthDate") String birthdate) {
     try {
@@ -72,7 +72,6 @@ public class PersonRest {
   }
 
   @PUT
-  @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
   public Person updatePerson(@FormParam("id") Long id, @FormParam("firstName") String firstName,
       @FormParam("lastName") String lastName) {
     try {
@@ -84,7 +83,7 @@ public class PersonRest {
 
   }
 
-  @Path("/{id}")
+  @Path("{id}")
   @DELETE
   public void deletePerson(@PathParam("id") Long id) {
     try {
@@ -95,9 +94,8 @@ public class PersonRest {
     }
   }
 
-  @Path("/{id}/runs")
+  @Path("{id}/runs")
   @GET
-  @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
   public List<Marathon> runsMarathon(@PathParam("id") Long id) {
     try {
       return service.runsMarathon(id);

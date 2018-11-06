@@ -19,6 +19,7 @@ import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -33,21 +34,21 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 @Named
-@Path("/marathon")
+@Path("marathon")
+@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 public class MarathonRest {
 
   @Inject
   private RestService service;
 
   @GET
-  @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
   public List<Marathon> getMarathons() {
     return service.getMarathons();
   }
 
-  @Path("/{id}")
+  @Path("{id}")
   @GET
-  @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
   public Marathon getMarathon(@PathParam("id") Long id) {
     try {
       return service.getMarathon(id);
@@ -58,7 +59,6 @@ public class MarathonRest {
   }
 
   @PUT
-  @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
   public Marathon updateMarathon(@FormParam("id") Long id, @FormParam("name") String name,
       @FormParam("city") String city) {
     try {
@@ -70,7 +70,6 @@ public class MarathonRest {
   }
 
   @POST
-  @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
   public Marathon createMarathon(@FormParam("id") Long id, @FormParam("name") String name, // FIXME: remove ID from form params!
       @FormParam("city") String city) {
     try {
@@ -81,7 +80,7 @@ public class MarathonRest {
     }
   }
 
-  @Path("/{id}")
+  @Path("{id}")
   @DELETE
   public void deleteMarathon(@PathParam("id") Long id) {
     try {
@@ -92,9 +91,8 @@ public class MarathonRest {
     }
   }
 
-  @Path("/{id}/category")
+  @Path("{id}/category")
   @POST
-  @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
   public Marathon createCategory(@PathParam("id") Long id, @FormParam("idCategory") Long idCategory,
       @FormParam("nameCategory") String nameCategory,
       @FormParam("DateOfRunCategory") String dateOfRunCategory,
@@ -112,9 +110,8 @@ public class MarathonRest {
 
   }
 
-  @Path("/{id}/category")
+  @Path("{id}/category")
   @PUT
-  @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
   public Marathon updateCategory(@PathParam("id") Long id, @FormParam("idCategory") Long idCategory,
       @FormParam("nameCategory") String nameCategory) {
     try {
@@ -126,7 +123,7 @@ public class MarathonRest {
 
   }
 
-  @Path("/{id}/category/{idCategory}")
+  @Path("{id}/category/{idCategory}")
   @DELETE
   public void deleteCategory(@PathParam("id") Long id, @PathParam("idCategory") Long idCategory) {
     try {
@@ -137,9 +134,8 @@ public class MarathonRest {
     }
   }
 
-  @Path("/{id}/category/{idCategory}/person/{idPerson}")
+  @Path("{id}/category/{idCategory}/person/{idPerson}")
   @PUT
-  @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
   public Category addPersonCategory(@PathParam("id") Long id,
       @PathParam("idCategory") Long idCategory, @PathParam("idPerson") Long idPerson) {
     try {
@@ -150,9 +146,8 @@ public class MarathonRest {
     }
   }
 
-  @Path("/{id}/category/{idCategory}/person/{idPerson}")
+  @Path("{id}/category/{idCategory}/person/{idPerson}")
   @DELETE
-  @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
   public Category deletePersonCategory(@PathParam("id") Long id,
       @PathParam("idCategory") Long idCategory, @PathParam("idPerson") Long idPerson) {
     try {
