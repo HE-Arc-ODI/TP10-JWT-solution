@@ -9,6 +9,7 @@
 
 package ch.hearc.ig.odi.business;
 
+import ch.hearc.ig.odi.exception.MarathonException;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
@@ -90,4 +91,19 @@ public class Person implements Serializable {
   public void addMarathon(Category category) {
     categories.add(category);
   }
+
+  public void deleteCategory(Long idCategory) throws MarathonException {
+    this.categories.remove(this.getIndex(idCategory));
+  }
+
+  public int getIndex(Long id) throws MarathonException {
+    for (int i = 0; i < categories.size(); i++) {
+      Category category = categories.get(i);
+      if (category.getId() == (id.longValue())) {
+        return i;
+      }
+    }
+    throw new MarathonException("Index not found");
+  }
+
 }

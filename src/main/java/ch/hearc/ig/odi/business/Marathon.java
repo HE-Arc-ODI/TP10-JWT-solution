@@ -86,9 +86,9 @@ public class Marathon implements Serializable {
   }
 
   public Category getCategory(Long id) {
-    for (Category listCategory : listCategories) {
-      if (((Category) listCategory).getId() == (id.longValue())) {
-        return listCategory;
+    for (Category category : listCategories) {
+      if (category.getId() == (id.longValue())) {
+        return category;
       }
     }
     return null;
