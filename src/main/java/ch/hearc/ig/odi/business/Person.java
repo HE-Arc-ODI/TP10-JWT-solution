@@ -92,7 +92,7 @@ public class Person implements Serializable {
     categories.add(category);
   }
 
-  public void deleteCategory(Long idCategory) throws MarathonException {
+  public void removeFromCategory(Long idCategory) throws MarathonException {
     this.categories.remove(this.getIndex(idCategory));
   }
 

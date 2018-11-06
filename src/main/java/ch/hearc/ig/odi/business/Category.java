@@ -9,6 +9,7 @@
 
 package ch.hearc.ig.odi.business;
 
+import ch.hearc.ig.odi.exception.MarathonException;
 import ch.hearc.ig.odi.exception.PersonException;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -137,8 +138,9 @@ public class Category implements Serializable {
     throw new PersonException("Index not found");
   }
 
-  public void deletePerson(Long id) throws PersonException {
-    this.participantList.remove(getIndex(id));
+  public void unregisterPerson(Long id) throws PersonException, MarathonException {
+    Person person = participantList.remove(getIndex(id));
+    person.removeFromCategory(this.id);
   }
 
   @XmlTransient

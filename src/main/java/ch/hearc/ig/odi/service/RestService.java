@@ -336,8 +336,7 @@ public class RestService {
         Category c = m.getCategory(idCategory);
         if (c != null) {
           if (idPerson != null) {
-            c.getPerson(idPerson).deleteCategory(idCategory);
-            c.deletePerson(idPerson);
+            c.unregisterPerson(idPerson);
             return c;
           } else {
             throw new PersonException("id person can't be null");
