@@ -139,7 +139,7 @@ public class MarathonRest {
   public Category addPersonCategory(@PathParam("id") Long id,
       @PathParam("idCategory") Long idCategory, @PathParam("idPerson") Long idPerson) {
     try {
-      return service.addPersonnCategory(id, idCategory, idPerson);
+      return service.addPersonCategory(id, idCategory, idPerson);
     } catch (MarathonException | PersonException e) {
       e.printStackTrace();
       throw new WebApplicationException(Response.Status.BAD_REQUEST);
@@ -151,7 +151,7 @@ public class MarathonRest {
   public Category deletePersonCategory(@PathParam("id") Long id,
       @PathParam("idCategory") Long idCategory, @PathParam("idPerson") Long idPerson) {
     try {
-      return service.deletePersonnCategory(id, idCategory, idPerson);
+      return service.removePersonFromCategory(id, idCategory, idPerson);
     } catch (MarathonException | PersonException e) {
       e.printStackTrace();
       throw new WebApplicationException(Response.Status.BAD_REQUEST);
