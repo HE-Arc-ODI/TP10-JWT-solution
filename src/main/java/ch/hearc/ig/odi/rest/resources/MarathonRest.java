@@ -31,7 +31,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 
 @Named
 @Path("marathon")
@@ -50,23 +49,13 @@ public class MarathonRest {
   @Path("{id}")
   @GET
   public Marathon getMarathon(@PathParam("id") Long id) {
-    try {
-      return service.getMarathon(id);
-    } catch (MarathonException e) {
-      e.printStackTrace();
-      throw new WebApplicationException(Status.NOT_FOUND);
-    }
+    return service.getMarathon(id);
   }
 
   @PUT
   public Marathon updateMarathon(@FormParam("id") Long id, @FormParam("name") String name,
       @FormParam("city") String city) {
-    try {
-      return service.updateMarathon(id, name, city);
-    } catch (MarathonException e) {
-      e.printStackTrace();
-      throw new WebApplicationException(Response.Status.BAD_REQUEST);
-    }
+    return service.updateMarathon(id, name, city);
   }
 
   @POST
@@ -103,7 +92,7 @@ public class MarathonRest {
       Date d = service.getDate(dateOfRunCategory);
       return service.createCategory(id, idCategory, nameCategory, d, maxPerson,
           Double.parseDouble(registrationFees), maxAge, minAge);
-    } catch (ParseException | MarathonException e) {
+    } catch (ParseException e) {
       e.printStackTrace();
       throw new WebApplicationException(Response.Status.BAD_REQUEST);
     }
@@ -114,12 +103,7 @@ public class MarathonRest {
   @PUT
   public Marathon updateCategory(@PathParam("id") Long id, @FormParam("idCategory") Long idCategory,
       @FormParam("nameCategory") String nameCategory) {
-    try {
-      return service.updateNameCategory(id, idCategory, nameCategory);
-    } catch (MarathonException e) {
-      e.printStackTrace();
-      throw new WebApplicationException(Response.Status.BAD_REQUEST);
-    }
+    return service.updateNameCategory(id, idCategory, nameCategory);
 
   }
 
@@ -140,7 +124,7 @@ public class MarathonRest {
       @PathParam("idCategory") Long idCategory, @PathParam("idPerson") Long idPerson) {
     try {
       return service.addPersonCategory(id, idCategory, idPerson);
-    } catch (MarathonException | PersonException e) {
+    } catch (MarathonException e) {
       e.printStackTrace();
       throw new WebApplicationException(Response.Status.BAD_REQUEST);
     }

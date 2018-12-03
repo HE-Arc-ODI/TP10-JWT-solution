@@ -9,11 +9,10 @@
 
 package ch.hearc.ig.odi.rest.resources;
 
-import ch.hearc.ig.odi.business.Marathon;
+import ch.hearc.ig.odi.business.Category;
 import ch.hearc.ig.odi.business.Person;
 import ch.hearc.ig.odi.exception.PersonException;
 import ch.hearc.ig.odi.service.RestService;
-import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
@@ -51,8 +50,9 @@ public class PersonRest {
   @GET
   public Person getPerson(@PathParam("id") Long id) {
     try {
-      return service.getPerson(id);
-    } catch (PersonException e) {
+      Person person = service.getPerson(id);
+      return person;
+    } catch (Exception e) {
       e.printStackTrace();
       throw new WebApplicationException(Status.NOT_FOUND);
     }
@@ -64,7 +64,7 @@ public class PersonRest {
     try {
       Date d = service.getDate(birthdate);
       return service.createPerson(id, firstName, lastName, d);
-    } catch (ParseException | PersonException e) {
+    } catch (Exception e) {
       e.printStackTrace();
       throw new WebApplicationException(Response.Status.BAD_REQUEST);
     }
@@ -96,10 +96,10 @@ public class PersonRest {
 
   @Path("{id}/runs")
   @GET
-  public List<Marathon> runsMarathon(@PathParam("id") Long id) {
+  public List<Category> runsMarathon(@PathParam("id") Long id) {
     try {
       return service.runsMarathon(id);
-    } catch (PersonException e) {
+    } catch (Exception e) {
       e.printStackTrace();
       throw new WebApplicationException(Status.NOT_FOUND);
     }

@@ -14,6 +14,8 @@ import ch.hearc.ig.odi.exception.PersonException;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -113,9 +115,22 @@ public class Category implements Serializable {
     this.participantList = participantList;
   }
 
-  public void addPerson(Person person) {
-    participantList.add(person);
-    person.addMarathon(this);
+  public void addPerson(Person person) throws MarathonException {
+    if (ageWithinCategory(person)){
+      participantList.add(person);
+      person.addMarathon(this);
+    } else {
+      throw new MarathonException("Person does not fit the category's age limits");
+    }
+  }
+
+
+  private boolean ageWithinCategory(Person person) {
+    DateFormat dateFormat = new SimpleDateFormat("yyyy");
+    int actualYearOfBirth = Integer.parseInt(dateFormat.format(person.getDateBirth()));
+    int minYearOfBirth = ageRange[0];
+    int maxYearOfBirth = ageRange[1];
+    return minYearOfBirth <= actualYearOfBirth && actualYearOfBirth <= maxYearOfBirth;
   }
 
   public Person getPerson(Long id) {

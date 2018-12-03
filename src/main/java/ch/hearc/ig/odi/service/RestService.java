@@ -22,17 +22,15 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * Mock persistence service class. Used as singleton to simulate persistence
  */
 public class RestService {
 
+  private final DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
   private Map<Long, Marathon> mapMarathon;
   private Map<Long, Person> mapPeople;
-
-  private final DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
 
   /**
    * Empty constructor. All initialization should be done here.
@@ -50,7 +48,7 @@ public class RestService {
    * @return this object's HashCode
    */
   public int getHashCode() {
-    return this.hashCode();
+    return hashCode();
   }
 
   public Date getDate(String date) throws ParseException {
@@ -58,219 +56,120 @@ public class RestService {
   }
 
   public List<Marathon> getMarathons() {
-    List l = new ArrayList<Marathon>();
-    for (Object o : mapMarathon.keySet()) {
-      Marathon marathon = mapMarathon.get(o);
-      l.add(marathon);
-    }
-    return l;
-
+    List<Marathon> marathons = new ArrayList<>(mapMarathon.values());
+    return marathons;
   }
 
-  public Marathon getMarathon(Long id) throws MarathonException {
-    if (id != null) {
-      Marathon m = this.mapMarathon.get(id);
-      if (m != null) {
-        return m;
-      } else {
-        throw new MarathonException("Marathon doesn't exist");
-      }
-    } else {
-      throw new MarathonException("id Marathon can't be null");
-    }
+  public Marathon getMarathon(Long id) {
+    return mapMarathon.get(id);
   }
 
-  public Marathon updateMarathon(Long id, String name, String city) throws MarathonException {
-    if (id != null) {
-      Marathon m = this.mapMarathon.get(id);
-      if (m != null) {
-        m.setName(name);
-        m.setCity(city);
-        return this.mapMarathon.get(id);
-      } else {
-        throw new MarathonException("Marathon doesn't exist");
-      }
-    } else {
-      throw new MarathonException("id Marathon can't be null");
-    }
+  public Marathon updateMarathon(Long id, String name, String city) {
+    Marathon m = mapMarathon.get(id);
+    m.setName(name);
+    m.setCity(city);
+    return mapMarathon.get(id);
   }
 
 
   public Marathon createMarathon(Long id, String name, String city) throws MarathonException {
     if (id != null) {
-      this.mapMarathon.put(id, new Marathon(id, name, city));
-      return this.mapMarathon.get(id);
+      mapMarathon.put(id, new Marathon(id, name, city));
+      return mapMarathon.get(id);
     } else {
       throw new MarathonException("id Marathon can't be null");
     }
   }
 
   public void deleteMarathon(Long id) throws MarathonException {
-    Marathon m = this.mapMarathon.remove(id);
+    Marathon m = mapMarathon.remove(id);
     if (m == null) {
       throw new MarathonException("Marathon doesn't exist");
     }
-
   }
 
   public Marathon createCategory(Long idMarathon, Long idCategory, String nameCategory,
-      Date dateOfRunCategory, Integer maxPerson, Double registrationFees, int maxAge, int minAge)
-      throws MarathonException {
-    Marathon m = this.mapMarathon.get(idMarathon);
-    if (m != null) {
-      if (idCategory != null && !nameCategory.matches("^\\s*$") && dateOfRunCategory != null
-          && maxPerson != null && registrationFees != null && maxAge != 0 && minAge != 0) {
-        m.addCategory(
-            new Category(idCategory, nameCategory, dateOfRunCategory, maxPerson, registrationFees,
-                maxAge, minAge));
-        return m;
-      } else {
-        throw new MarathonException("no Category data can be null or empty");
-      }
-    } else {
-      throw new MarathonException("Marathon doesn't exsit");
-    }
+      Date dateOfRunCategory, Integer maxPerson, Double registrationFees, int maxAge, int minAge) {
+    Marathon m = mapMarathon.get(idMarathon);
+    m.addCategory(
+        new Category(idCategory, nameCategory, dateOfRunCategory, maxPerson, registrationFees,
+            maxAge, minAge));
+    return m;
   }
 
-  public Marathon updateNameCategory(Long idMarathon, Long idCategory, String nameCategory)
-      throws MarathonException {
-    Marathon m = this.mapMarathon.get(idMarathon);
-    if (m != null) {
-      if (idCategory != null && !nameCategory.matches("^\\s*$")) {
-        Category c = m.getCategory(idCategory);
-        c.setName(nameCategory);
-        return m;
-      } else {
-        throw new MarathonException("Category name can be null or empty");
-      }
-    } else {
-      throw new MarathonException("Marathon doesn't exsit");
+  public Marathon updateNameCategory(Long idMarathon, Long idCategory, String nameCategory) {
+    Marathon marathon = mapMarathon.get(idMarathon);
+    if (!nameCategory.matches("^\\s*$")) {
+      Category c = marathon.getCategory(idCategory);
+      c.setName(nameCategory);
     }
+    return marathon;
   }
 
   public void deleteCategory(Long idMarathon, Long idCategory) throws MarathonException {
-    Marathon m = this.mapMarathon.get(idMarathon);
-    if (m != null) {
-        m.deleteCategory(idCategory);
-    } else {
-      throw new MarathonException("unknown Marathon" + idMarathon);
-    }
+    Marathon m = mapMarathon.get(idMarathon);
+    m.deleteCategory(idCategory);
   }
 
   public List<Person> getPersons() {
-    List<Person> list = mapPeople.values().stream().collect(Collectors.toList());
+    List<Person> list = new ArrayList<>(mapPeople.values());
     return list;
   }
 
-  public Person getPerson(Long idPerson) throws PersonException {
-      Person p = this.mapPeople.get(idPerson);
-      if (p != null) {
-        return p;
-      } else {
-        throw new PersonException("unknown Person: " + idPerson);
-      }
+  public Person getPerson(Long idPerson) {
+    return mapPeople.get(idPerson);
   }
 
-  public Person createPerson(Long id, String firstName, String lastName, Date birthdate)
-      throws PersonException {
-      this.mapPeople.put(id, new Person(id, firstName, lastName, birthdate));
-      return this.mapPeople.get(id);
-}
+  public Person createPerson(Long id, String firstName, String lastName, Date birthdate) {
+    mapPeople.put(id, new Person(id, firstName, lastName, birthdate));
+    return mapPeople.get(id);
+  }
 
-  public Person updatePerson(Long idPerson, String firstName, String lastName) throws PersonException {
-      Person p = mapPeople.get(idPerson);
-      if (p != null) {
-        p.setFirstName(firstName);
-        p.setLastName(lastName);
-        return p;
-      } else {
-        throw new PersonException("unknown Person: " + idPerson);
-      }
+  public Person updatePerson(Long idPerson, String firstName, String lastName)
+      throws PersonException {
+    Person p = mapPeople.get(idPerson);
+    if (p != null) {
+      p.setFirstName(firstName);
+      p.setLastName(lastName);
+      return p;
+    } else {
+      throw new PersonException("unknown Person: " + idPerson);
+    }
   }
 
   public void deletePerson(Long idPerson) throws PersonException {
-    Person person = this.mapPeople.remove(idPerson);
+    Person person = mapPeople.remove(idPerson);
     if (person == null) {
       throw new PersonException("unknown Person: " + idPerson);
     }
   }
 
   public Category addPersonCategory(Long idMarathon, Long idCategory, Long idPerson)
-      throws MarathonException, PersonException {
-    Marathon marathon = this.mapMarathon.get(idMarathon);
-    if (marathon != null) {
-        Category category = marathon.getCategory(idCategory);
-        if (category != null) {
-            Person person = this.mapPeople.get(idPerson);
-            if (person != null) {
-              if (checkAge(category, person)){
-                category.addPerson(person);
-              } else {
-                throw new MarathonException(String.format("person's %d year of birth does not fit this category",idPerson));
-              }
-              return category;
-            } else {
-              throw new PersonException("unknown Person: " + idPerson);
-            }
-        } else {
-          throw new MarathonException("unknown Category:" + idCategory);
-        }
-    } else {
-      throw new MarathonException("unknown Marathon" + idMarathon);
-    }
+      throws MarathonException {
+    Marathon marathon = mapMarathon.get(idMarathon);
+    Category category = marathon.getCategory(idCategory);
+    Person person = mapPeople.get(idPerson);
+    category.addPerson(person);
+    return category;
   }
 
-  private boolean checkAge(Category category, Person person) throws MarathonException {
-    DateFormat dateFormat = new SimpleDateFormat("yyyy");
-    int actualYearOfBirth = Integer.parseInt(dateFormat.format(person.getDateBirth()));
-    int minYearOfBirth = category.getAgeRange()[0];
-    int maxYearOfBirth = category.getAgeRange()[1];
-    return minYearOfBirth <= actualYearOfBirth  && actualYearOfBirth <= maxYearOfBirth;
-  }
 
   public Category removePersonFromCategory(Long idMarathon, Long idCategory, Long idPerson)
-      throws MarathonException, PersonException {
-    Marathon m = this.mapMarathon.get(idMarathon);
-    if (m != null) {
-      if (idCategory != null) {
-        Category c = m.getCategory(idCategory);
-        if (c != null) {
-          if (idPerson != null) {
-            c.unregisterPerson(idPerson);
-            return c;
-          } else {
-            throw new PersonException("id person can't be null");
-          }
-        } else {
-          throw new MarathonException("Category doesn't exsist");
-        }
-      } else {
-        throw new MarathonException("id category can't be null");
-      }
-    } else {
-      throw new MarathonException("Marathon doesn't exsit");
-    }
+      throws PersonException, MarathonException {
+    Marathon m = mapMarathon.get(idMarathon);
+    Category c = m.getCategory(idCategory);
+    c.unregisterPerson(idPerson);
+    return c;
   }
 
-  public List<Marathon> runsMarathon(Long id) throws PersonException {
-    List l = new ArrayList<Marathon>();
-    Person p = this.mapPeople.get(id);
-    if (p != null) {
-      List lc = p.getCategories();
-      int j = 0;
-      while (lc.size() > j) {
-        l.add(new Marathon(((Category) lc.get(j)).getMarathon(), ((Category) lc.get(j)))); // FIXME: pourquoi créer un nouvel objet marathon?
-        j++;
-      }
-      return l;
-    } else {
-      throw new PersonException("Person doesn't exist");
-    }
+  public List<Category> runsMarathon(Long personId) {
+    Person person = mapPeople.get(personId);
+    return (List<Category>) person.getCategories();
   }
 
   private void populateMockPersistenceData() throws ParseException {
-    this.mapMarathon = new HashMap<>();
-    this.mapPeople = new HashMap<>();
+    mapMarathon = new HashMap<>();
+    mapPeople = new HashMap<>();
 
     //create marathon
     Marathon m0 = new Marathon(Long.parseLong("1000"), "Swiss Alpine Marathon", "Davos");
@@ -312,29 +211,33 @@ public class RestService {
             Double.parseDouble("17"), 2003, 2004));
 
     //create and add person to list of people
-    this.mapPeople.put(Long.parseLong("3001"),
+    mapPeople.put(Long.parseLong("3001"),
         new Person(Long.parseLong("3001"), "Myriam", "Schaffter", format.parse("17.09.1989")));
-    this.mapPeople.put(Long.parseLong("3002"),
+    mapPeople.put(Long.parseLong("3002"),
         new Person(Long.parseLong("3002"), "Ethan", "Bos", format.parse("11.02.2000")));
-    this.mapPeople.put(Long.parseLong("3003"),
+    mapPeople.put(Long.parseLong("3003"),
         new Person(Long.parseLong("3003"), "Emily", "Smith", format.parse("21.06.1996")));
-    this.mapPeople.put(Long.parseLong("3004"),
+    mapPeople.put(Long.parseLong("3004"),
         new Person(Long.parseLong("3004"), "Jean", "Smith", format.parse("01.11.1997")));
-    this.mapPeople.put(Long.parseLong("3005"),
+    mapPeople.put(Long.parseLong("3005"),
         new Person(Long.parseLong("3005"), "Paul", "Rossman", format.parse("15.03.1977")));
-    this.mapPeople.put(Long.parseLong("3006"),
+    mapPeople.put(Long.parseLong("3006"),
         new Person(Long.parseLong("3006"), "Anna", "Barth", format.parse("05.12.1960")));
-    this.mapPeople.put(Long.parseLong("3007"),
+    mapPeople.put(Long.parseLong("3007"),
         new Person(Long.parseLong("3007"), "Kylie", "Lawrence", format.parse("12.08.1658")));
 
     //add Participant to one category
-    m1.getCategory(Long.parseLong("2004")).addPerson(this.mapPeople.get(Long.parseLong("3001")));
-    m1.getCategory(Long.parseLong("2001")).addPerson(this.mapPeople.get(Long.parseLong("3002")));
-    m2.getCategory(Long.parseLong("2006")).addPerson(this.mapPeople.get(Long.parseLong("3003")));
-    m2.getCategory(Long.parseLong("2006")).addPerson(this.mapPeople.get(Long.parseLong("3004")));
-    m3.getCategory(Long.parseLong("2010")).addPerson(this.mapPeople.get(Long.parseLong("3005")));
-    m3.getCategory(Long.parseLong("2009")).addPerson(this.mapPeople.get(Long.parseLong("3006")));
-    m3.getCategory(Long.parseLong("2009")).addPerson(this.mapPeople.get(Long.parseLong("3007")));
+    try {
+      m1.getCategory(Long.parseLong("2004")).addPerson(mapPeople.get(Long.parseLong("3001")));
+      m1.getCategory(Long.parseLong("2001")).addPerson(mapPeople.get(Long.parseLong("3002")));
+      m2.getCategory(Long.parseLong("2006")).addPerson(mapPeople.get(Long.parseLong("3003")));
+      m2.getCategory(Long.parseLong("2006")).addPerson(mapPeople.get(Long.parseLong("3004")));
+      m3.getCategory(Long.parseLong("2010")).addPerson(mapPeople.get(Long.parseLong("3005")));
+      m3.getCategory(Long.parseLong("2009")).addPerson(mapPeople.get(Long.parseLong("3006")));
+      m3.getCategory(Long.parseLong("2009")).addPerson(mapPeople.get(Long.parseLong("3007")));
+    } catch (MarathonException e) {
+      e.printStackTrace();
+    }
 
     //add marathon to list of marathons
     mapMarathon.put(m0.getId(), m0);
