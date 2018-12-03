@@ -13,6 +13,7 @@ import ch.hearc.ig.odi.business.Category;
 import ch.hearc.ig.odi.business.Marathon;
 import ch.hearc.ig.odi.exception.MarathonException;
 import ch.hearc.ig.odi.exception.PersonException;
+import ch.hearc.ig.odi.filter.Secured;
 import ch.hearc.ig.odi.service.RestService;
 import java.text.ParseException;
 import java.util.Date;
@@ -59,6 +60,7 @@ public class MarathonRest {
   }
 
   @POST
+  @Secured
   public Marathon createMarathon(@FormParam("id") Long id, @FormParam("name") String name, // FIXME: remove ID from form params!
       @FormParam("city") String city) {
     try {

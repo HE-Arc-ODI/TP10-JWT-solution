@@ -14,9 +14,13 @@
     <init-param>
       <param-name>jersey.config.server.provider.packages</param-name>
       <param-value>
-        com.jersey.jaxb,
+        org.glassfish.jersey.jaxb,
         com.fasterxml.jackson.jaxrs.json
       </param-value>
+    </init-param>
+    <init-param>
+      <param-name>com.sun.jersey.spi.container.ContainerRequestFilters</param-name>
+      <param-value>ch.hearc.ig.odi.filter.AuthenticationFilter</param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>

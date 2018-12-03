@@ -234,7 +234,6 @@ public class RestService {
       m2.getCategory(Long.parseLong("2006")).addPerson(mapPeople.get(Long.parseLong("3004")));
       m3.getCategory(Long.parseLong("2010")).addPerson(mapPeople.get(Long.parseLong("3005")));
       m3.getCategory(Long.parseLong("2009")).addPerson(mapPeople.get(Long.parseLong("3006")));
-      m3.getCategory(Long.parseLong("2009")).addPerson(mapPeople.get(Long.parseLong("3007")));
     } catch (MarathonException e) {
       e.printStackTrace();
     }
