@@ -1,5 +1,6 @@
 package ch.hearc.ig.odi.filter;
 
+import ch.hearc.ig.odi.exception.AuthenticationException;
 import java.io.IOException;
 import javax.annotation.Priority;
 import javax.ws.rs.Priorities;
@@ -68,7 +69,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
     // Check if the token was issued by the server and if it's not expired
     // Throw an Exception if the token is invalid
     if(!token.equals("123456")){
-      throw new Exception();
+      throw new AuthenticationException("invalid token");
     }
   }
 }

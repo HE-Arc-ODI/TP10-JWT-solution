@@ -1,5 +1,6 @@
 package ch.hearc.ig.odi.rest.resources;
 
+import ch.hearc.ig.odi.exception.AuthenticationException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
@@ -37,7 +38,7 @@ public class AuthenticationEndpoint {
     // Authenticate against a database, LDAP, file or whatever
     // Throw an Exception if the credentials are invalid
     if (!(username.equals("bob") && password.equals("1234"))) {
-      throw new Exception();
+      throw new AuthenticationException("invalid credentials");
     }
 
 
