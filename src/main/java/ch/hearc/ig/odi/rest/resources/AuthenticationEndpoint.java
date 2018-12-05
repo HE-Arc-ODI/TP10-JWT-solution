@@ -20,6 +20,8 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @Path("/authentication")
 public class AuthenticationEndpoint {
@@ -32,6 +34,9 @@ public class AuthenticationEndpoint {
 
   @Context
   private UriInfo uriInfo;
+
+  private static final Logger LOGGER = LogManager.getLogger(AuthenticationEndpoint.class);
+
 
   @POST
   @Produces(MediaType.APPLICATION_JSON)
@@ -51,6 +56,7 @@ public class AuthenticationEndpoint {
       return Response.ok(token).build();
 
     } catch (Exception e) {
+      LOGGER.fatal("Access forbidden");
       return Response.status(Response.Status.FORBIDDEN).build();
     }
   }
@@ -60,10 +66,9 @@ public class AuthenticationEndpoint {
     // Throw an Exception if the credentials are invalid
     String dbPassword = service.getUsers().get(username);
     if (dbPassword == null || !dbPassword.equals(password)) {
+      LOGGER.fatal("invalid credentials");
       throw new AuthenticationException("invalid credentials");
     }
-
-
   }
 
   private String issueToken(String login) {
@@ -75,7 +80,7 @@ public class AuthenticationEndpoint {
         .setExpiration(toDate(LocalDateTime.now().plusMinutes(15L)))
         .signWith(SignatureAlgorithm.HS512, key)
         .compact();
-    System.out.println("#### generating token for a key : " + jwtToken + " - " + key); // TODO: remettre un vrai logger
+    LOGGER.info("generating token for a key");
     return jwtToken;
   }
 

@@ -13,6 +13,8 @@ import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @Secured
 @Provider
@@ -24,6 +26,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 
   private static final String REALM = "example";
   private static final String AUTHENTICATION_SCHEME = "Bearer";
+  private static final Logger LOGGER = LogManager.getLogger(AuthenticationFilter.class);
 
   @Override
   public void filter(ContainerRequestContext requestContext) throws IOException {
@@ -47,8 +50,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
       // Validate the token
       Key key = keyGenerator.generateKey();
       Jwts.parser().setSigningKey(key).parseClaimsJws(token);
-      System.out.println("#### valid token : " + token); // TODO: remettre un vrai logger
-
+      LOGGER.info("the token has been validated");
     } catch (Exception e) {
       abortWithUnauthorized(requestContext);
     }
@@ -65,6 +67,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 
   private void abortWithUnauthorized(ContainerRequestContext requestContext) {
 
+    LOGGER.fatal("Abort with unauthorized. Authentication schema : " + AUTHENTICATION_SCHEME + ", Realm : " + REALM);
     // Abort the filter chain with a 401 status code response
     // The WWW-Authenticate header is sent along with the response
     requestContext.abortWith(
@@ -72,13 +75,5 @@ public class AuthenticationFilter implements ContainerRequestFilter {
             .header(HttpHeaders.WWW_AUTHENTICATE,
                 AUTHENTICATION_SCHEME + " realm=\"" + REALM + "\"")
             .build());
-  }
-
-  private void validateToken(String token) throws Exception {
-    // Check if the token was issued by the server and if it's not expired
-    // Throw an Exception if the token is invalid
-    if(!token.equals("123456")){
-      throw new AuthenticationException("invalid token");
-    }
   }
 }
