@@ -31,6 +31,7 @@ public class RestService {
   private final DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
   private Map<Long, Marathon> mapMarathon;
   private Map<Long, Person> mapPeople;
+  private Map<String, String> users;
 
   /**
    * Empty constructor. All initialization should be done here.
@@ -243,6 +244,13 @@ public class RestService {
     mapMarathon.put(m1.getId(), m1);
     mapMarathon.put(m2.getId(), m2);
     mapMarathon.put(m3.getId(), m3);
+
+    users = new HashMap<>();
+    users.put("bob","1234");
+    users.put("alice","1234");
   }
 
+  public Map<String, String> getUsers() {
+    return users;
+  }
 }

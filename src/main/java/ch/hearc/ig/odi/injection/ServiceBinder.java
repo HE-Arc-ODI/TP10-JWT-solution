@@ -1,6 +1,8 @@
 package ch.hearc.ig.odi.injection;
 
 import ch.hearc.ig.odi.service.RestService;
+import ch.hearc.ig.odi.util.KeyGenerator;
+import ch.hearc.ig.odi.util.SimpleKeyGenerator;
 import java.text.ParseException;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 
@@ -16,5 +18,6 @@ public class ServiceBinder extends AbstractBinder {
     } catch (ParseException e) {
       e.printStackTrace();
     }
+    bind(new SimpleKeyGenerator()).to(KeyGenerator.class);
   }
 }
