@@ -1,8 +1,12 @@
 package ch.hearc.ig.odi.filter;
 
 import ch.hearc.ig.odi.exception.AuthenticationException;
+import ch.hearc.ig.odi.util.KeyGenerator;
+import io.jsonwebtoken.Jwts;
 import java.io.IOException;
+import java.security.Key;
 import javax.annotation.Priority;
+import javax.inject.Inject;
 import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
@@ -14,6 +18,9 @@ import javax.ws.rs.ext.Provider;
 @Provider
 @Priority(Priorities.AUTHENTICATION)
 public class AuthenticationFilter implements ContainerRequestFilter {
+
+  @Inject
+  private KeyGenerator keyGenerator;
 
   private static final String REALM = "example";
   private static final String AUTHENTICATION_SCHEME = "Bearer";
@@ -38,7 +45,9 @@ public class AuthenticationFilter implements ContainerRequestFilter {
     try {
 
       // Validate the token
-      validateToken(token);
+      Key key = keyGenerator.generateKey();
+      Jwts.parser().setSigningKey(key).parseClaimsJws(token);
+      System.out.println("#### valid token : " + token); // TODO: remettre un vrai logger
 
     } catch (Exception e) {
       abortWithUnauthorized(requestContext);

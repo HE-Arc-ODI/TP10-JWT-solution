@@ -75,7 +75,7 @@ public class AuthenticationEndpoint {
         .setExpiration(toDate(LocalDateTime.now().plusMinutes(15L)))
         .signWith(SignatureAlgorithm.HS512, key)
         .compact();
-    System.out.println("#### generating token for a key : " + jwtToken + " - " + key);
+    System.out.println("#### generating token for a key : " + jwtToken + " - " + key); // TODO: remettre un vrai logger
     return jwtToken;
   }
 
