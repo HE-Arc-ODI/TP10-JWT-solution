@@ -9,6 +9,8 @@
 
 package ch.hearc.ig.odi.service;
 
+import static ch.hearc.ig.odi.util.PasswordUtils.digestPassword;
+
 import ch.hearc.ig.odi.business.Category;
 import ch.hearc.ig.odi.business.Marathon;
 import ch.hearc.ig.odi.business.Person;
@@ -246,8 +248,8 @@ public class RestService {
     mapMarathon.put(m3.getId(), m3);
 
     users = new HashMap<>();
-    users.put("bob","1234");
-    users.put("alice","1234");
+    users.put("bob",digestPassword("1234"));
+    users.put("alice",digestPassword("1234"));
   }
 
   public Map<String, String> getUsers() {

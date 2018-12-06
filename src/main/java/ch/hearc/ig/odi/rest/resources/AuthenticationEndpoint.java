@@ -1,5 +1,7 @@
 package ch.hearc.ig.odi.rest.resources;
 
+import static ch.hearc.ig.odi.util.PasswordUtils.digestPassword;
+
 import ch.hearc.ig.odi.exception.AuthenticationException;
 import ch.hearc.ig.odi.service.RestService;
 import ch.hearc.ig.odi.util.KeyGenerator;
@@ -22,6 +24,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 
 @Path("/authentication")
 public class AuthenticationEndpoint {
@@ -67,7 +70,9 @@ public class AuthenticationEndpoint {
     String dbPassword = service.getUsers().get(username);
     if (dbPassword == null || !dbPassword.equals(password)) {
       LOGGER.fatal("invalid credentials");
-      throw new AuthenticationException("invalid credentials");
+      if (dbPassword == null || !dbPassword.equals(digestPassword(password))) {
+        throw new AuthenticationException("invalid credentials");
+      }
     }
   }
 
