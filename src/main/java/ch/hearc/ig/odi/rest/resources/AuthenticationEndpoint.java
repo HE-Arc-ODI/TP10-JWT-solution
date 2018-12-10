@@ -1,3 +1,7 @@
+/*
+ * 2018. Cours outils de développement intégré. ulysse.rosselet@he-arc.ch
+ */
+
 package ch.hearc.ig.odi.rest.resources;
 
 import static ch.hearc.ig.odi.util.PasswordUtils.digestPassword;
@@ -82,7 +86,7 @@ public class AuthenticationEndpoint {
         .setSubject(login)
         .setIssuer(uriInfo.getAbsolutePath().toString())
         .setIssuedAt(new Date())
-        .setExpiration(toDate(LocalDateTime.now().plusMinutes(15L)))
+        .setExpiration(toDate(LocalDateTime.now().plusMinutes(1L)))
         .signWith(SignatureAlgorithm.HS512, key)
         .compact();
     LOGGER.info("generating token for a key");

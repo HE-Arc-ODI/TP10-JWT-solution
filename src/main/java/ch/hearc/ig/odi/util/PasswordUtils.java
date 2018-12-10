@@ -1,3 +1,7 @@
+/*
+ * 2018. Cours outils de développement intégré. ulysse.rosselet@he-arc.ch
+ */
+
 package ch.hearc.ig.odi.util;
 
 import java.nio.charset.StandardCharsets;

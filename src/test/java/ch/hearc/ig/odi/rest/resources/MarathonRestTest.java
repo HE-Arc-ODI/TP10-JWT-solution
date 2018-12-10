@@ -1,3 +1,7 @@
+/*
+ * 2018. Cours outils de développement intégré. ulysse.rosselet@he-arc.ch
+ */
+
 package ch.hearc.ig.odi.rest.resources;
 
 import static org.junit.Assert.assertEquals;

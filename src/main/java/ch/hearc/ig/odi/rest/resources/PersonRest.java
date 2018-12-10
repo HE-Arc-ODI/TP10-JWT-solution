@@ -1,17 +1,14 @@
 /*
- * Company : HEG-ARC
- * Lesson: ODI SA17
- * Project: Marathon
- * Autor: Myriam Schaffter
- * Date: 30.11.17 12:33
- * Module: sa17-projet1
+ * 2018. Cours outils de développement intégré. ulysse.rosselet@he-arc.ch
  */
+
 
 package ch.hearc.ig.odi.rest.resources;
 
 import ch.hearc.ig.odi.business.Category;
 import ch.hearc.ig.odi.business.Person;
 import ch.hearc.ig.odi.exception.PersonException;
+import ch.hearc.ig.odi.filter.Secured;
 import ch.hearc.ig.odi.service.RestService;
 import java.util.Date;
 import java.util.List;
@@ -59,6 +56,7 @@ public class PersonRest {
   }
 
   @POST
+  @Secured
   public Person createPerson(@FormParam("id") Long id, @FormParam("firstName") String firstName,
       @FormParam("lastName") String lastName, @FormParam("birthDate") String birthdate) {
     try {
@@ -72,6 +70,7 @@ public class PersonRest {
   }
 
   @PUT
+  @Secured
   public Person updatePerson(@FormParam("id") Long id, @FormParam("firstName") String firstName,
       @FormParam("lastName") String lastName) {
     try {
@@ -85,6 +84,7 @@ public class PersonRest {
 
   @Path("{id}")
   @DELETE
+  @Secured
   public void deletePerson(@PathParam("id") Long id) {
     try {
       service.deletePerson(id);

@@ -1,11 +1,7 @@
 /*
- * Company : HEG-ARC
- * Lesson: ODI SA17
- * Project: Marathon
- * Autor: Myriam Schaffter
- * Date: 23.11.17 10:51
- * Module: sa17-projet1
+ * 2018. Cours outils de développement intégré. ulysse.rosselet@he-arc.ch
  */
+
 
 package ch.hearc.ig.odi.rest.resources;
 
@@ -54,6 +50,7 @@ public class MarathonRest {
   }
 
   @PUT
+  @Secured
   public Marathon updateMarathon(@FormParam("id") Long id, @FormParam("name") String name,
       @FormParam("city") String city) {
     return service.updateMarathon(id, name, city);
@@ -73,6 +70,7 @@ public class MarathonRest {
 
   @Path("{id}")
   @DELETE
+  @Secured
   public void deleteMarathon(@PathParam("id") Long id) {
     try {
       service.deleteMarathon(id);
@@ -84,6 +82,7 @@ public class MarathonRest {
 
   @Path("{id}/category")
   @POST
+  @Secured
   public Marathon createCategory(@PathParam("id") Long id, @FormParam("idCategory") Long idCategory,
       @FormParam("nameCategory") String nameCategory,
       @FormParam("DateOfRunCategory") String dateOfRunCategory,
@@ -103,6 +102,7 @@ public class MarathonRest {
 
   @Path("{id}/category")
   @PUT
+  @Secured
   public Marathon updateCategory(@PathParam("id") Long id, @FormParam("idCategory") Long idCategory,
       @FormParam("nameCategory") String nameCategory) {
     return service.updateNameCategory(id, idCategory, nameCategory);
@@ -111,6 +111,7 @@ public class MarathonRest {
 
   @Path("{id}/category/{idCategory}")
   @DELETE
+  @Secured
   public void deleteCategory(@PathParam("id") Long id, @PathParam("idCategory") Long idCategory) {
     try {
       service.deleteCategory(id, idCategory);
@@ -122,6 +123,7 @@ public class MarathonRest {
 
   @Path("{id}/category/{idCategory}/person/{idPerson}")
   @PUT
+  @Secured
   public Category addPersonCategory(@PathParam("id") Long id,
       @PathParam("idCategory") Long idCategory, @PathParam("idPerson") Long idPerson) {
     try {
@@ -134,6 +136,7 @@ public class MarathonRest {
 
   @Path("{id}/category/{idCategory}/person/{idPerson}")
   @DELETE
+  @Secured
   public Category deletePersonCategory(@PathParam("id") Long id,
       @PathParam("idCategory") Long idCategory, @PathParam("idPerson") Long idPerson) {
     try {

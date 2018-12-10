@@ -1,6 +1,9 @@
+/*
+ * 2018. Cours outils de développement intégré. ulysse.rosselet@he-arc.ch
+ */
+
 package ch.hearc.ig.odi.filter;
 
-import ch.hearc.ig.odi.exception.AuthenticationException;
 import ch.hearc.ig.odi.util.KeyGenerator;
 import io.jsonwebtoken.Jwts;
 import java.io.IOException;

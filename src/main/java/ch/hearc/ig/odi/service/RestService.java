@@ -1,11 +1,7 @@
 /*
- * Company : HEG-ARC
- * Lesson: ODI SA17
- * Project: Marathon
- * Autor: Myriam Schaffter
- * Date: 23.11.17 10:45
- * Module: sa17-projet1
+ * 2018. Cours outils de développement intégré. ulysse.rosselet@he-arc.ch
  */
+
 
 package ch.hearc.ig.odi.service;
 
